@@ -21,8 +21,9 @@ public class Menu {
     private LocalDate startDate;
     private LocalDate endDate;
 
-
     @OneToMany
     private List<Dish> dishes;
-
+    public void addDish(Dish dish) {
+        this.dishes.add(dish);
+    }
 }
