@@ -1,9 +1,7 @@
 package pl.edu.pg.menu.caffemenu.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -11,6 +9,9 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Dish implements Comparable<Dish>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

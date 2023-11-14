@@ -1,8 +1,7 @@
 package pl.edu.pg.menu.caffemenu.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,7 +9,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Menu {
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Menu implements Comparable<Menu> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +28,20 @@ public class Menu {
     private List<Dish> dishes;
     public void addDish(Dish dish) {
         this.dishes.add(dish);
+    }
+    @Override
+    public String toString() {
+        String result = new String("Menu [id=" + id + ", name=" + name + ", start date=" + startDate + ", end date=" + endDate + ", dishes=[");
+        for (Dish dish : dishes)
+        {
+            result = result + dish.toString();
+        }
+        return result + "]\n";
+    }
+    @Override
+    public int compareTo(Menu o) {
+        {
+            return this.startDate.compareTo(o.getStartDate());
+        }
     }
 }
