@@ -34,18 +34,12 @@ public class MenuService {
     public void destroy() throws Exception {
         System.out.println("Nested Lambdas:\n");
         this.menuRepository.findAll().forEach((menu) -> {
-            System.out.println("Menu: " + menu.getName() + menu.getStartDate() + menu.getEndDate() + "\n");
+            System.out.println(menu);
             menu.getDishes().forEach(
                     (dish) -> {
                         System.out.println("Dish: " + dish.getId() + " " + dish.getName()+ " "  + dish.getPrice()+ " " + "\n");
                     });
             });
-        System.out.println("Pipeline printing:\n");
-        printAllElements(getAllElementsFromAllCategories().collect(Collectors.toSet()));
-        Stream<Dish> unfiltered = getAllElementsFromAllCategories();
-        printAllElements(unfiltered.filter(c ->
-                (
-                        (c.getPrice().compareTo(new BigDecimal(5)) > 0).collect(Collectors.toSet()
-                )));
+
         }
     }

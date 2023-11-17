@@ -17,8 +17,8 @@ public class MenuRepository {
     public void init() {
         Menu secondBreakfastMenu = Menu.builder()
                 .name("Second Breakfast")
-                .startDate(LocalDate.of(2023, 05, 1))
-                .endDate(LocalDate.of(2023, 06, 7))
+                .startDate(LocalDate.of(2023, 5, 1))
+                .endDate(LocalDate.of(2023, 6, 7))
                 .dishes(List.of(
                         Dish.builder()
                                 .name("Muffin")
