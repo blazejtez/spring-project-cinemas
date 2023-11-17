@@ -37,9 +37,14 @@ public class MenuService {
             System.out.println(menu);
             menu.getDishes().forEach(
                     (dish) -> {
-                        System.out.println("Dish: " + dish.getId() + " " + dish.getName()+ " "  + dish.getPrice()+ " " + "\n");
+                        System.out.println("Dish: " + dish.getId() + " " + dish.getName() + " " + dish.getPrice() + " " + "\n");
                     });
-            });
+        });
+        //lab1-3
+        System.out.println("Pipeline printing - Lab1-3:\n");
+        Stream<Dish> allItems = getAllElementsFromAllCategories();
+        printAllElements(getAllElementsFromAllCategories().collect(Collectors.toSet()));
 
-        }
+
     }
+}
