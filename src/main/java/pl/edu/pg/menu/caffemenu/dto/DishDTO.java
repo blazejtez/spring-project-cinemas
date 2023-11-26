@@ -24,6 +24,16 @@ public class DishDTO implements Comparable<Dish> {
 
     private String menuName;
 
+    public DishDTO fromEntity(Dish dish)
+    {
+        DishDTO dishDTO = new DishDTO();
+        dishDTO.setId(dish.getId());
+        dishDTO.setName(dish.getName());
+        dishDTO.setPrice(dish.getPrice());
+        dishDTO.setMenuName(dish.getMenu().getName());
+        return dishDTO;
+    }
+
     public DishDTO() {
 
     }

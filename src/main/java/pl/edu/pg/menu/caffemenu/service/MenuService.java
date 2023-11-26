@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.edu.pg.menu.caffemenu.dto.DishDTO;
 import pl.edu.pg.menu.caffemenu.entity.Dish;
 import pl.edu.pg.menu.caffemenu.repository.MenuRepository;
 
@@ -40,7 +41,7 @@ public class MenuService {
             System.out.println(menu);
             menu.getDishes().forEach(
                     (dish) -> {
-                        System.out.println("Dish: " + dish.getId() + " " + dish.getName() + " " + dish.getPrice() + " " + "\n");
+                        System.out.println(dish);
                     });
         });
         //lab1-3
@@ -57,6 +58,19 @@ public class MenuService {
                 .toList();
         System.out.println(filteredItems);
 
-
+        //lab1-5
+        System.out.println("Transform elements collection created earlier into stream of DTO objects," +
+                " sort using natural order and collect into List, then print it");
+        List<DishDTO> dishDTOS = allItems
+                .stream()
+                .map(dish -> {
+                    DishDTO dishDTO = new DishDTO();
+                    return dishDTO.fromEntity(dish);
+                })
+                .collect(Collectors.toList());
+        dishDTOS.forEach(dishDTO -> {
+            System.out.println(dishDTO);
+        }
+        );
     }
 }
