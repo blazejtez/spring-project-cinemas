@@ -21,9 +21,18 @@ public class MenuRepository {
                 .endDate(LocalDate.of(2023, 6, 7))
                 .dishes(List.of(
                         Dish.builder()
-                                .name("Muffin")
+                                .name("Chocolate Muffin")
                                 .price(new BigDecimal("4.99"))
                                 .build(),
+                        Dish.builder()
+                                .name("Vanilla Muffin")
+                                .price(new BigDecimal("3.99"))
+                                .build(),
+                        Dish.builder()
+                                .name("Pumpkin Spice Muffin")
+                                .price(new BigDecimal("7.99"))
+                                .build(),
+
                         Dish.builder()
                                 .name("Fruit Salad")
                                 .price(new BigDecimal("7.99"))

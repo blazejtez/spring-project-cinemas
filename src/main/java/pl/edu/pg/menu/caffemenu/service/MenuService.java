@@ -8,6 +8,7 @@ import pl.edu.pg.menu.caffemenu.entity.Dish;
 import pl.edu.pg.menu.caffemenu.repository.MenuRepository;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,7 +23,9 @@ public class MenuService {
     }
 
     public Stream<Dish> getAllElementsFromAllCategories() {
-        return menuRepository.findAll().stream()
+        return menuRepository
+                .findAll()
+                .stream()
                 .flatMap(menu -> menu.getDishes().stream());
     }
     public void printAllElements(Set<Dish> allElements) {
@@ -42,8 +45,17 @@ public class MenuService {
         });
         //lab1-3
         System.out.println("Pipeline printing - Lab1-3:\n");
-        Stream<Dish> allItems = getAllElementsFromAllCategories();
+        Set<Dish> allItems = getAllElementsFromAllCategories().collect(Collectors.toSet());
         printAllElements(getAllElementsFromAllCategories().collect(Collectors.toSet()));
+
+        //lab1-4
+        System.out.println("Filter elements collection by menu, sorting it by price ascending, and printing it");
+        List<Dish> filteredItems = allItems
+                .stream()
+                .filter(item -> item.getName().contains("Muffin"))
+                .sorted()
+                .toList();
+        System.out.println(filteredItems);
 
 
     }

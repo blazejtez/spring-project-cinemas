@@ -1,6 +1,7 @@
 package pl.edu.pg.menu.caffemenu.dto;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,10 @@ public class DishDTO implements Comparable<Dish> {
     private BigDecimal price;
 
     private String menuName;
+
+    public DishDTO() {
+
+    }
 
     @Override
     public int compareTo(Dish o) {
