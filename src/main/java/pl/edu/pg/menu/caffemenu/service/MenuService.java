@@ -54,16 +54,17 @@ public class MenuService {
         });
         //lab1-3
         System.out.println("Pipeline printing - Lab1-3:\n");
-        List<Dish> filteredItems = getAllElementsFromAllCategories().toList();
-        Set<Dish> allItems = new TreeSet<Dish>(filteredItems);
-        printAllElements(allItems);
+        List<Dish> allItemsList = getAllElementsFromAllCategories().toList();
+        Set<Dish> allItemsSet = new TreeSet<Dish>(allItemsList);
+        printAllElements(allItemsSet);
 
         //lab1-4
-        System.out.println("Filter elements collection by menu, sorting it by price ascending, and printing it");
-//        List<Dish> filteredItems = getAllElementsFromAllCategories()
-//                .filter(item -> item.getName().contains("Muffin"))
-//                .sorted()
-//                .toList();
+        System.out.println("Filter elements collection by name, sorting it by price ascending, and printing it");
+        List<Dish> filteredItems = allItemsSet
+                .stream()
+                .filter(item -> item.getName().contains("Muffin"))
+                .sorted()
+                .toList();
         System.out.println(filteredItems);
 
         //lab1-5
