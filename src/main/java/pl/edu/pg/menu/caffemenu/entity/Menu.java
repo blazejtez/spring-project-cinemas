@@ -31,12 +31,8 @@ public class Menu implements Comparable<Menu> {
     }
     @Override
     public String toString() {
-        String result = new String("Menu [id=" + id + ", name=" + name + ", start date=" + startDate + ", end date=" + endDate + ", dishes=[");
-        for (Dish dish : dishes)
-        {
-            result = result + dish.toString();
-        }
-        return result + "]\n";
+        return "Menu [id=" + id + ", name=" + name + ", start date=" + startDate + ", end date=" + endDate + "]";
+
     }
     @Override
     public int compareTo(Menu o) {

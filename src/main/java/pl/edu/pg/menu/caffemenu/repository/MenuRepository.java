@@ -39,6 +39,7 @@ public class MenuRepository {
                                 .build()
                 ))
                 .build();
+        secondBreakfastMenu.getDishes().forEach(dish -> {dish.setMenu(secondBreakfastMenu);});
         menuList.add(secondBreakfastMenu);
 
         Menu dinnerMenu = Menu.builder()
@@ -56,6 +57,7 @@ public class MenuRepository {
                                 .build()
                 ))
                 .build();
+        dinnerMenu.getDishes().forEach(dish -> {dish.setMenu(dinnerMenu);});
         menuList.add(dinnerMenu);
 
         Menu supperMenu = Menu.builder()
@@ -73,6 +75,7 @@ public class MenuRepository {
                                 .build()
                 ))
                 .build();
+        supperMenu.getDishes().forEach(dish -> {dish.setMenu(supperMenu);});
         menuList.add(supperMenu);
 
     }

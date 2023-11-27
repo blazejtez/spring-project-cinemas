@@ -9,8 +9,10 @@ import pl.edu.pg.menu.caffemenu.entity.Dish;
 import pl.edu.pg.menu.caffemenu.repository.MenuRepository;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,19 +26,25 @@ public class MenuService {
     }
 
     public Stream<Dish> getAllElementsFromAllCategories() {
-        return menuRepository
-                .findAll()
-                .stream()
-                .flatMap(menu -> menu.getDishes().stream());
+        TreeSet<Dish> allDishes = new TreeSet<Dish>();
+        menuRepository.findAll().forEach(menu -> {
+            allDishes.addAll(menu.getDishes());
+        });
+        return allDishes.stream();
     }
     public void printAllElements(Set<Dish> allElements) {
         menuRepository.findAll().stream()
-                .flatMap(menu -> menu.getDishes().stream())
-                .collect(Collectors.toSet()).forEach(dish -> System.out.println(dish));
+                .forEach((menu) -> {
+                    System.out.println(menu);
+                    menu.getDishes().forEach(
+                        (dish) -> {
+                            System.out.println(dish);
+                        });
+        });
     }
     @PreDestroy
     public void destroy() throws Exception {
-        System.out.println("Nested Lambdas:\n");
+        System.out.println("Lab1-2: Nested Lambdas:\n");
         this.menuRepository.findAll().forEach((menu) -> {
             System.out.println(menu);
             menu.getDishes().forEach(
@@ -46,31 +54,32 @@ public class MenuService {
         });
         //lab1-3
         System.out.println("Pipeline printing - Lab1-3:\n");
-        Set<Dish> allItems = getAllElementsFromAllCategories().collect(Collectors.toSet());
-        printAllElements(getAllElementsFromAllCategories().collect(Collectors.toSet()));
+        List<Dish> filteredItems = getAllElementsFromAllCategories().toList();
+        Set<Dish> allItems = new TreeSet<Dish>(filteredItems);
+        printAllElements(allItems);
 
         //lab1-4
         System.out.println("Filter elements collection by menu, sorting it by price ascending, and printing it");
-        List<Dish> filteredItems = allItems
-                .stream()
-                .filter(item -> item.getName().contains("Muffin"))
-                .sorted()
-                .toList();
+//        List<Dish> filteredItems = getAllElementsFromAllCategories()
+//                .filter(item -> item.getName().contains("Muffin"))
+//                .sorted()
+//                .toList();
         System.out.println(filteredItems);
 
         //lab1-5
         System.out.println("Transform elements collection created earlier into stream of DTO objects," +
-                " sort using natural order and collect into List, then print it");
-        List<DishDTO> dishDTOS = allItems
-                .stream()
-                .map(dish -> {
-                    DishDTO dishDTO = new DishDTO();
-                    return dishDTO.fromEntity(dish);
-                })
-                .collect(Collectors.toList());
-        dishDTOS.forEach(dishDTO -> {
+                " sort using natural order (by price) and collect into List, then print it");
+        List<DishDTO> dishDTOS = getAllElementsFromAllCategories()
+                .map(DishDTO::fromEntity)
+                .sorted(Comparator.comparing(DishDTO::getPrice))
+                .toList();
+        dishDTOS.stream().forEach(dishDTO -> {
             System.out.println(dishDTO);
         }
+
+        //lab1-6
+
+
         );
     }
 }
