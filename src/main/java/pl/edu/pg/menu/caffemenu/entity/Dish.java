@@ -3,6 +3,7 @@ package pl.edu.pg.menu.caffemenu.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
@@ -12,7 +13,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Dish implements Comparable<Dish>{
+@Data
+public class Dish implements Comparable<Dish>, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +24,7 @@ public class Dish implements Comparable<Dish>{
     private BigDecimal price;
 
     @ManyToOne
-    private Menu menu;
+    private transient Menu menu;
 
 
     @Override
@@ -32,7 +34,7 @@ public class Dish implements Comparable<Dish>{
 
     @Override
     public String toString() {
-        return "Dish [id=" + id + ", name=" + name + ", price=" + price + "]";
+        return "Dish [id=" + id + ", name=" + name + ", price=" + price + " from Menu: "+ menu.getName() + "]";
     }
 
 }

@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.pg.menu.caffemenu.dto.DishDTO;
 import pl.edu.pg.menu.caffemenu.entity.Dish;
+import pl.edu.pg.menu.caffemenu.entity.Menu;
 import pl.edu.pg.menu.caffemenu.repository.MenuRepository;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,7 +58,7 @@ public class MenuService {
         //lab1-3
         System.out.println("Pipeline printing - Lab1-3:\n");
         List<Dish> allItemsList = getAllElementsFromAllCategories().toList();
-        Set<Dish> allItemsSet = new TreeSet<Dish>(allItemsList);
+        Set<Dish> allItemsSet = new TreeSet<>(allItemsList);
         printAllElements(allItemsSet);
 
         //lab1-4
@@ -76,11 +79,55 @@ public class MenuService {
                 .toList();
         dishDTOS.stream().forEach(dishDTO -> {
             System.out.println(dishDTO);
-        }
+        });
 
         //lab1-6
+        System.out.println("Serialize and Deserialize");
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("menus.bin"))) {
+            outputStream.writeObject(menuRepository.findAll());
+            System.out.println("Menus serialized and stored in 'menus.bin'");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
-        );
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("menus.bin"))) {
+            TreeSet<Menu> menus = (TreeSet<Menu>) inputStream.readObject();
+
+            // Printing categories with their elements
+            for (Menu menu : menus) {
+                menu.getDishes().forEach(
+                        (dish) -> dish.setMenu(menu)
+                );
+                System.out.println(menu);
+                menu.getDishes().forEach(
+                        (dish) -> {
+                            System.out.println(dish);
+                        });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            TreeSet<Menu> menus = menuRepository.findAll();
+            ForkJoinPool customThreadPool = new ForkJoinPool(3);
+            customThreadPool.submit(
+                    () -> menus.parallelStream().forEach(dish ->
+                    {
+                        try {
+                            Thread.sleep((int)(Math.random()*10000));
+                            System.out.println(dish.toString() + " " + Thread.currentThread().getName());
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }));
+
+            customThreadPool.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
     }
 }

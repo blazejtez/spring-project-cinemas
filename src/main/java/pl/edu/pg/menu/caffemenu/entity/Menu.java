@@ -3,6 +3,7 @@ package pl.edu.pg.menu.caffemenu.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Menu implements Comparable<Menu> {
+@Data
+public class Menu implements Comparable<Menu>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,7 @@ public class Menu implements Comparable<Menu> {
     @Override
     public String toString() {
         return "Menu [id=" + id + ", name=" + name + ", start date=" + startDate + ", end date=" + endDate + "]";
+
 
     }
     @Override
