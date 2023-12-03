@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.UUID;
 
 @Repository
 public class MenuRepository {
@@ -21,23 +22,23 @@ public class MenuRepository {
                 .endDate(LocalDate.of(2023, 6, 7))
                 .dishes(List.of(
                         Dish.builder()
-                                .id(Long.parseLong("1"))
+                                .id(UUID.randomUUID())
                                 .name("Chocolate Muffin")
                                 .price(new BigDecimal("4.99"))
                                 .build(),
                         Dish.builder()
-                                .id(Long.parseLong("2"))
+                                .id(UUID.randomUUID())
                                 .name("Vanilla Muffin")
                                 .price(new BigDecimal("3.99"))
                                 .build(),
                         Dish.builder()
-                                .id(Long.parseLong("3"))
+                                .id(UUID.randomUUID())
                                 .name("Pumpkin Spice Muffin")
                                 .price(new BigDecimal("7.99"))
                                 .build(),
 
                         Dish.builder()
-                                .id(Long.parseLong("4"))
+                                .id(UUID.randomUUID())
                                 .name("Fruit Salad")
                                 .price(new BigDecimal("7.99"))
                                 .build()
@@ -52,12 +53,12 @@ public class MenuRepository {
                 .endDate(LocalDate.of(2023, 12, 7))
                 .dishes(List.of(
                         Dish.builder()
-                                .id(Long.parseLong("5"))
+                                .id(UUID.randomUUID())
                                 .name("Steak")
                                 .price(new BigDecimal("15.99"))
                                 .build(),
                         Dish.builder()
-                                .id(Long.parseLong("6"))
+                                .id(UUID.randomUUID())
                                 .name("Pasta")
                                 .price(new BigDecimal("12.99"))
                                 .build()
@@ -72,12 +73,12 @@ public class MenuRepository {
                 .endDate(LocalDate.of(2023, 11, 7))
                 .dishes(List.of(
                         Dish.builder()
-                                .id(Long.parseLong("7"))
+                                .id(UUID.randomUUID())
                                 .name("Soup")
                                 .price(new BigDecimal("6.99"))
                                 .build(),
                         Dish.builder()
-                                .id(Long.parseLong("8"))
+                                .id(UUID.randomUUID())
                                 .name("Chicken")
                                 .price(new BigDecimal("11.99"))
                                 .build()
