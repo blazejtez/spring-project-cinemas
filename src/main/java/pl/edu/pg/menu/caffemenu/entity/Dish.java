@@ -8,12 +8,12 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@Entity
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Entity
+@Table(name = "dishes")
 public class Dish implements Comparable<Dish>, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,7 @@ public class Dish implements Comparable<Dish>, Serializable {
     private BigDecimal price;
 
     @ManyToOne
+    @JoinColumn(name = "menu")
     private transient Menu menu;
 
 

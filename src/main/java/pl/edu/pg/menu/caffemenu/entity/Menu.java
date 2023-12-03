@@ -9,12 +9,13 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@ToString
+@Entity
+@Table(name = "menus")
 public class Menu implements Comparable<Menu>, Serializable {
 
     @Id
@@ -22,11 +23,14 @@ public class Menu implements Comparable<Menu>, Serializable {
     private Long id;
 
     private String name;
-
+    @Column(name = "start_date")
     private LocalDate startDate;
+    @Column(name = "end_date")
     private LocalDate endDate;
 
-    @OneToMany
+    @OneToMany(mappedBy = "menu")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Dish> dishes;
     public void addDish(Dish dish) {
         this.dishes.add(dish);
