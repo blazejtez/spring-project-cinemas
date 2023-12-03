@@ -26,7 +26,7 @@ public class Dish implements Comparable<Dish>, Serializable {
 
     @ManyToOne
     @JoinColumn(name = "menu")
-    private transient Menu menu;
+    private Menu menu;
 
 
     @Override
