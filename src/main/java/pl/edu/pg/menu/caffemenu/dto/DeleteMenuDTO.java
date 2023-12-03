@@ -1,12 +1,8 @@
 package pl.edu.pg.menu.caffemenu.dto;
 
-
-import jakarta.persistence.Column;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.UUID;
-
 @Getter
 @Setter
 @Builder
@@ -14,9 +10,6 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class MenuReadDTO {
+public class DeleteMenuDTO {
     private UUID id;
-    private String name;
-    private LocalDate startDate;
-    private LocalDate endDate;
 }
