@@ -15,9 +15,9 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "dishes")
+@ToString
 public class Dish implements Comparable<Dish>, Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     private String name;
@@ -34,9 +34,5 @@ public class Dish implements Comparable<Dish>, Serializable {
         return this.price.compareTo(o.getPrice());
     }
 
-    @Override
-    public String toString() {
-        return "Dish [id=" + id + ", name=" + name + ", price=" + price + " from Menu: "+ menu.getName() + "]";
-    }
 
 }

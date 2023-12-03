@@ -8,6 +8,7 @@ import lombok.Setter;
 import pl.edu.pg.menu.caffemenu.entity.Dish;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,8 +16,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 public class DishDTO implements Comparable<Dish> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
     private String name;
 

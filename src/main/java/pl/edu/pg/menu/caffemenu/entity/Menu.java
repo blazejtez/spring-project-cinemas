@@ -1,5 +1,6 @@
 package pl.edu.pg.menu.caffemenu.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +21,6 @@ import java.util.UUID;
 public class Menu implements Comparable<Menu>, Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     private String name;
@@ -29,19 +29,15 @@ public class Menu implements Comparable<Menu>, Serializable {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu", fetch=FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private List<Dish> dishes;
-    public void addDish(Dish dish) {
-        this.dishes.add(dish);
-    }
-    @Override
-    public String toString() {
-        return "Menu [id=" + id + ", name=" + name + ", start date=" + startDate + ", end date=" + endDate + "]";
-
-
-    }
+//    @Override
+//    public String toString() {
+//        return "Menu [id=" + id + ", name=" + name + ", start date=" + startDate + ", end date=" + endDate + "]";
+//    }
     @Override
     public int compareTo(Menu o) {
         {
