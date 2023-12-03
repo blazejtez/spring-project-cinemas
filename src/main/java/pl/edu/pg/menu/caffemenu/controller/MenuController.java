@@ -1,2 +1,4 @@
-package pl.edu.pg.menu.caffemenu.controller;public class MenuController {
+package pl.edu.pg.menu.caffemenu.controller;
+
+public class MenuController {
 }
