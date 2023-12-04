@@ -64,10 +64,9 @@ public class DishController {
     @GetMapping("api/dishes/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public ResponseEntity<Dish> getDish(@PathVariable UUID id)
+    public ResponseEntity<Dish> getDish(@PathVariable UUID uuid)
     {
-        List<Dish> dishes;
-        dishes = this.dishService.findById();
-        return dishes;
+        Dish dish = this.dishService.findById(uuid);
+
     }
 }

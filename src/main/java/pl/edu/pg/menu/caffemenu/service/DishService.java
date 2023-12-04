@@ -1,5 +1,6 @@
 package pl.edu.pg.menu.caffemenu.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.edu.pg.menu.caffemenu.entity.Dish;
 import pl.edu.pg.menu.caffemenu.entity.Menu;
@@ -28,5 +29,12 @@ public class DishService {
     public void delete(UUID uuid) {
         Optional<Dish> optionalDish = this.dishRepository.findById(uuid);
         optionalDish.ifPresent(dish -> this.dishRepository.delete(dish));
+    }
+
+    public Dish findById(UUID uuid) {
+        Dish dish = this.dishRepository
+                .findById(uuid)
+                .orElseThrow(() -> new EntityNotFoundException("Entity not found with id: " + uuid));
+        return dish;
     }
 }
