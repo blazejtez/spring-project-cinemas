@@ -7,9 +7,9 @@ import pl.edu.pg.menu.caffemenu.entity.Dish;
 import java.util.List;
 import java.util.function.Function;
 
-public class DishToDeleteDishDTO  implements Function<List<Dish>, DeleteDishDTO> {
+public class DishToDeleteDishDTO  implements Function<Dish, DeleteDishDTO> {
     @Override
-    public DeleteDishDTO apply(List<Dish> entities) {
-        return null;
+    public DeleteDishDTO apply(Dish entity) {
+        return DeleteDishDTO.builder().build();
     }
 }
