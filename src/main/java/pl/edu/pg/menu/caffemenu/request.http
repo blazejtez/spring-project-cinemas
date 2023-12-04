@@ -1,0 +1,12 @@
+### Get all menus
+
+GET http://localhost:8080/api/menus
+
+### Get single menu
+
+GET http://localhost:8080/api/menus/47a9767c-9203-11ee-b9d1-0242ac120002
+
+### Get single menu not existing
+
+GET http://localhost:8080/api/menus/3c6f1eb1-8069-44ab-988f-d7fed2b65d87
+

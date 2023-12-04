@@ -3,7 +3,6 @@ package pl.edu.pg.menu.caffemenu.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.pg.menu.caffemenu.entity.Dish;
 import pl.edu.pg.menu.caffemenu.entity.Menu;
 import pl.edu.pg.menu.caffemenu.repository.MenuRepository;
 
@@ -33,8 +32,6 @@ public class MenuService {
         return this.menuRepository
                 .findById(uuid)
                 .orElseThrow(() -> new EntityNotFoundException("Menu not found with id: " + uuid));
-
-
     }
 
 }

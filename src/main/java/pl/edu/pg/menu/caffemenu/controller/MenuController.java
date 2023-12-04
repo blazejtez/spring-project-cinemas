@@ -1,24 +1,21 @@
 package pl.edu.pg.menu.caffemenu.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pg.menu.caffemenu.dto.MenuReadDTO;
 import pl.edu.pg.menu.caffemenu.dto.MenusReadDTO;
-import pl.edu.pg.menu.caffemenu.entity.Dish;
 import pl.edu.pg.menu.caffemenu.entity.Menu;
 import pl.edu.pg.menu.caffemenu.function.MenuToDeleteMenuDTO;
 import pl.edu.pg.menu.caffemenu.function.MenuToMenuReadDTO;
 import pl.edu.pg.menu.caffemenu.function.MenuToMenuUpdateDTO;
 import pl.edu.pg.menu.caffemenu.function.MenuToMenusReadDTO;
-import pl.edu.pg.menu.caffemenu.function.MenusToMenusReadDTO;
-import pl.edu.pg.menu.caffemenu.service.MenuService;
 import pl.edu.pg.menu.caffemenu.service.MenuService;
 
 import java.util.List;
 import java.util.UUID;
-
 @RestController
 public class MenuController {
     private final MenuService menuService;
@@ -27,11 +24,8 @@ public class MenuController {
     private final MenuToMenuReadDTO MenuToMenuReadDTO;
     private final MenuToMenuUpdateDTO MenuToMenuUpdateDTO;
 
-    public MenuController(MenuService menuService,
-                          MenuToMenusReadDTO menusToMenusReadDTO,
-                          MenuToDeleteMenuDTO menuToDeleteMenuDTO,
-                          MenuToMenuReadDTO menuToMenuReadDTO,
-                          MenuToMenuUpdateDTO menuToMenuUpdateDTO) {
+    @Autowired
+    public MenuController(MenuService menuService, MenuToMenusReadDTO menusToMenusReadDTO, pl.edu.pg.menu.caffemenu.function.MenuToDeleteMenuDTO menuToDeleteMenuDTO, pl.edu.pg.menu.caffemenu.function.MenuToMenuReadDTO menuToMenuReadDTO, pl.edu.pg.menu.caffemenu.function.MenuToMenuUpdateDTO menuToMenuUpdateDTO) {
         this.menuService = menuService;
         MenusToMenusReadDTO = menusToMenusReadDTO;
         MenuToDeleteMenuDTO = menuToDeleteMenuDTO;
@@ -42,20 +36,24 @@ public class MenuController {
     @GetMapping("api/menus")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    MenusReadDTO getMenus()
+    ResponseEntity<MenusReadDTO> getMenus()
     {
-        
+        List<Menu> menus = this.menuService.findAll();
+        MenusReadDTO menusReadDTO = this.MenusToMenusReadDTO.apply(menus);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "DishController");
+        return ResponseEntity.accepted().headers(headers).body(menusReadDTO);
     }
+//
+//    @PostMapping("api/menus")
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    ResponseEntity<String> postMenus(@RequestBody MenuUpdateDTO menuUpdateDTO)
+//    {
+//
+//    }
 
-    @PostMapping("api/menus")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    void postMenus()
-    {
-
-    }
-
-    @DeleteMapping("api/menu/{uuid}")
+    @DeleteMapping("api/menus/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     ResponseEntity<String> deleteMenu(@PathVariable UUID uuid)
@@ -65,7 +63,7 @@ public class MenuController {
         headers.add("Responded", "DishController");
         return ResponseEntity.accepted().headers(headers).body("Succesfully deleted "+ uuid.toString());
     }
-    @GetMapping("api/menu/{uuid}")
+    @GetMapping("api/menus/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     ResponseEntity<MenuReadDTO> getMenu(@PathVariable UUID uuid)
