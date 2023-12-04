@@ -1,10 +1,11 @@
 package pl.edu.pg.menu.caffemenu.function;
 
+import org.springframework.stereotype.Component;
 import pl.edu.pg.menu.caffemenu.dto.MenuReadDTO;
 import pl.edu.pg.menu.caffemenu.entity.Menu;
 
 import java.util.function.Function;
-
+@Component
 public class MenuToMenuReadDTO implements Function<Menu, MenuReadDTO> {
 
     @Override
