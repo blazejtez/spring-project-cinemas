@@ -28,9 +28,4 @@ public class MenusReadDTO {
     @Singular("menu")
     private List<Menu> menus;
 
-    public static MenusReadDTO fromEntity(List<Menu> menuList) {
-        return MenusReadDTO.builder()
-                .menus(menuList)
-                .build();
-    }
 }

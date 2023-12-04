@@ -13,7 +13,6 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class DishReadDTO {
-    private UUID id;
     private String name;
     private BigDecimal price;
 

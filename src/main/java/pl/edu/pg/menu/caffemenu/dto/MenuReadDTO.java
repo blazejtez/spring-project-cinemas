@@ -15,7 +15,6 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class MenuReadDTO {
-    private UUID id;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;

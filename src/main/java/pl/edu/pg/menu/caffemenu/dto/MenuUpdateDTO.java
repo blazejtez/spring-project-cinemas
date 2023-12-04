@@ -17,13 +17,8 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class MenuUpdateDTO {
-    @Id
-    private UUID id;
-
     private String name;
-    @Column(name = "start_date")
     private LocalDate startDate;
-    @Column(name = "end_date")
     private LocalDate endDate;
     private List<Dish> dishes;
 }
