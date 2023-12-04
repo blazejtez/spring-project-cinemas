@@ -1,20 +1,13 @@
 package pl.edu.pg.menu.caffemenu.service;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.pg.menu.caffemenu.dto.DishDTO;
 import pl.edu.pg.menu.caffemenu.entity.Dish;
 import pl.edu.pg.menu.caffemenu.entity.Menu;
 import pl.edu.pg.menu.caffemenu.repository.MenuRepository;
 
-import java.io.*;
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ForkJoinPool;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class MenuService {
@@ -36,8 +29,12 @@ public class MenuService {
         return menuRepository.findAll();
     }
 
-    public Optional<Menu> findOne(UUID menuUuid) {
-        return this.menuRepository.findById(menuUuid);
+    public Menu findById(UUID uuid) {
+        return this.menuRepository
+                .findById(uuid)
+                .orElseThrow(() -> new EntityNotFoundException("Menu not found with id: " + uuid));
+
 
     }
+
 }

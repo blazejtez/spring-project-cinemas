@@ -1,11 +1,12 @@
 package pl.edu.pg.menu.caffemenu.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import pl.edu.pg.menu.caffemenu.dto.MenuReadDTO;
 import pl.edu.pg.menu.caffemenu.dto.MenusReadDTO;
+import pl.edu.pg.menu.caffemenu.entity.Dish;
 import pl.edu.pg.menu.caffemenu.entity.Menu;
 import pl.edu.pg.menu.caffemenu.function.MenuToDeleteMenuDTO;
 import pl.edu.pg.menu.caffemenu.function.MenuToMenuReadDTO;
@@ -16,6 +17,7 @@ import pl.edu.pg.menu.caffemenu.service.MenuService;
 import pl.edu.pg.menu.caffemenu.service.MenuService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class MenuController {
@@ -44,4 +46,40 @@ public class MenuController {
     {
         
     }
+
+    @PostMapping("api/menus")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    void postMenus()
+    {
+
+    }
+
+    @DeleteMapping("api/menu/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    ResponseEntity<String> deleteMenu(@PathVariable UUID uuid)
+    {
+        Menu menu = this.menuService.findById(uuid);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "DishController");
+        return ResponseEntity.accepted().headers(headers).body("Succesfully deleted "+ uuid.toString());
+    }
+    @GetMapping("api/menu/{uuid}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    ResponseEntity<MenuReadDTO> getMenu(@PathVariable UUID uuid)
+    {
+        Menu menu = this.menuService.findById(uuid);
+        MenuReadDTO menuReadDTO = MenuReadDTO
+                .builder()
+                .name(menu.getName())
+                .endDate(menu.getEndDate())
+                .startDate(menu.getStartDate())
+                .build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "DishController");
+        return ResponseEntity.accepted().headers(headers).body(menuReadDTO);
+    }
+
 }

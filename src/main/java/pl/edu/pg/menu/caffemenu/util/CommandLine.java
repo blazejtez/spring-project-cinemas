@@ -84,17 +84,8 @@ public class CommandLine implements CommandLineRunner {
                         System.out.println("Wrong Menu UUID");
                         continue;
                     }
-                    Optional<Menu> response = this.menuService.findOne(menuUuid);
-                    Menu menu;
-                    if(response.isPresent())
-                    {
-                        menu = response.get();
-                    }
-                    else
-                    {
-                        System.out.println("Menu not present");
-                        continue;
-                    }
+
+                    Menu menu = this.menuService.findById(menuUuid);
                     Dish dish = Dish.builder()
                             .id(uuid)
                             .name(name)

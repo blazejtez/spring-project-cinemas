@@ -1,5 +1,6 @@
 package pl.edu.pg.menu.caffemenu.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +68,8 @@ public class DishController {
     public ResponseEntity<Dish> getDish(@PathVariable UUID uuid)
     {
         Dish dish = this.dishService.findById(uuid);
-
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "DishController");
+        return ResponseEntity.accepted().headers(headers).body(dish);
     }
 }

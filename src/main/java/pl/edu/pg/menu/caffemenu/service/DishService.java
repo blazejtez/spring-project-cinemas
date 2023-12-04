@@ -34,7 +34,7 @@ public class DishService {
     public Dish findById(UUID uuid) {
         Dish dish = this.dishRepository
                 .findById(uuid)
-                .orElseThrow(() -> new EntityNotFoundException("Entity not found with id: " + uuid));
+                .orElseThrow(() -> new EntityNotFoundException("Dish not found with id: " + uuid));
         return dish;
     }
 }
