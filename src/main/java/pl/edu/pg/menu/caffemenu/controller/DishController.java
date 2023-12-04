@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import pl.edu.pg.menu.caffemenu.dto.DishReadDTO;
 import pl.edu.pg.menu.caffemenu.dto.DishesReadDTO;
 import pl.edu.pg.menu.caffemenu.dto.MenusReadDTO;
 import pl.edu.pg.menu.caffemenu.entity.Dish;
@@ -52,6 +53,15 @@ public class DishController {
         dishes = this.dishService.findAll();
         return dishesToDishesReadDTO.apply(dishes);
     }
+
+//    @GetMapping("api/{category}/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    public DishReadDTO getDish()
+//    {
+//        dish = this.dishService.();
+//        return dishesToDishesReadDTO.apply(dish);
+//    }
 
     @GetMapping("api/dishes/{id}")
     @ResponseStatus(HttpStatus.OK)
