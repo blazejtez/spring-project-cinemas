@@ -11,5 +11,4 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class DeleteMenuDTO {
-    private UUID id;
 }

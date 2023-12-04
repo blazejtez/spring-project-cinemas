@@ -12,5 +12,4 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 public class DeleteDishDTO {
-    private UUID id;
 }
