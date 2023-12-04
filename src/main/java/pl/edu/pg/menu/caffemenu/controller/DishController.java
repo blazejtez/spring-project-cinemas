@@ -21,10 +21,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class DishController {
-    public DishController(DishService dishService) {
-        this.dishService = dishService;
-    }
-
     public DishController(DishService dishService,
                           DishesToDishesReadDTO dishesToDishesReadDTO,
                           DishToDeleteDishDTO dishToDeleteDishDTO,
@@ -37,13 +33,15 @@ public class DishController {
         this.dishToDishUpdateDTO = dishToDishUpdateDTO;
     }
 
-    private DishService dishService;
-    private DishesToDishesReadDTO dishesToDishesReadDTO;
-    private DishToDeleteDishDTO dishToDeleteDishDTO;
-    private DishToDishReadDTO dishToDishReadDTO;
-    private DishToDishUpdateDTO dishToDishUpdateDTO;
+    private final DishService dishService;
+    private final DishesToDishesReadDTO dishesToDishesReadDTO;
+    private final DishToDeleteDishDTO dishToDeleteDishDTO;
+    private final DishToDishReadDTO dishToDishReadDTO;
+    private final DishToDishUpdateDTO dishToDishUpdateDTO;
 
 
+
+    //get dishes
     @GetMapping("api/dishes")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
