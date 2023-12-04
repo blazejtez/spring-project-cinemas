@@ -30,7 +30,7 @@ public class Menu implements Comparable<Menu>, Serializable {
     private LocalDate endDate;
 
     @Singular
-    @OneToMany(mappedBy = "menu", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
