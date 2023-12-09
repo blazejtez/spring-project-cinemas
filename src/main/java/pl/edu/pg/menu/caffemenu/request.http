@@ -10,3 +10,10 @@ GET http://localhost:8080/api/menus/47a9767c-9203-11ee-b9d1-0242ac120002
 
 GET http://localhost:8080/api/menus/3c6f1eb1-8069-44ab-988f-d7fed2b65d87
 
+### Post single menu
+
+POST http://localhost:8080/api/menus/3c6f1eb1-8069-44ab-988f-d7fed2b65d87
+
+### Delete single menu
+
+DELETE http://localhost:8080/api/menus/47a9767c-9203-11ee-b9d1-0242ac120002

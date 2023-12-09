@@ -34,4 +34,7 @@ public class MenuService {
                 .orElseThrow(() -> new EntityNotFoundException("Menu not found with id: " + uuid));
     }
 
+    public void deleteById(UUID uuid) {
+        this.menuRepository.deleteById(uuid);
+    }
 }

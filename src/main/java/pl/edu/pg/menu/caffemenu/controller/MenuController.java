@@ -1,5 +1,6 @@
 package pl.edu.pg.menu.caffemenu.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -58,10 +59,22 @@ public class MenuController {
     @ResponseBody
     ResponseEntity<String> deleteMenu(@PathVariable UUID uuid)
     {
-        Menu menu = this.menuService.findById(uuid);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Responded", "DishController");
-        return ResponseEntity.accepted().headers(headers).body("Succesfully deleted "+ uuid.toString());
+        try
+        {
+            Menu menu = this.menuService.findById(uuid);
+            this.menuService.deleteById(uuid);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Responded", "DishController");
+            return ResponseEntity.accepted().headers(headers).body("Succesfully deleted "+ uuid.toString());
+        }
+        catch (EntityNotFoundException e)
+        {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Not Found", "DishController");
+            return ResponseEntity.accepted().headers(headers).body("Entity with id: " + uuid.toString() + "was not found.");
+        }
+
+
     }
     @GetMapping("api/menus/{uuid}")
     @ResponseStatus(HttpStatus.OK)
