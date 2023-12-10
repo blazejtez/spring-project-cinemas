@@ -17,13 +17,16 @@ import java.util.UUID;
 @Builder
 @ToString
 @Entity
-@Table(name = "menus")
-public class Menu implements Comparable<Menu>, Serializable {
+@Table(name = "cinemas")
+public class Cinema implements Comparable<Cinema>, Serializable {
 
     @Id
     private UUID id;
 
     private String name;
+    private String address;
+    @Column(name = "employees_number")
+    private int employeesNumber;
     @Column(name = "start_date")
     private LocalDate startDate;
     @Column(name = "end_date")
@@ -34,13 +37,13 @@ public class Menu implements Comparable<Menu>, Serializable {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
-    private List<Dish> dishes;
+    private List<Showtime> showtimes;
 //    @Override
 //    public String toString() {
 //        return "Menu [id=" + id + ", name=" + name + ", start date=" + startDate + ", end date=" + endDate + "]";
 //    }
     @Override
-    public int compareTo(Menu o) {
+    public int compareTo(Cinema o) {
         {
             return this.startDate.compareTo(o.getStartDate());
         }

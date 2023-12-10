@@ -3,7 +3,7 @@ package pl.edu.pg.menu.caffemenu.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.pg.menu.caffemenu.entity.Menu;
+import pl.edu.pg.menu.caffemenu.entity.Cinema;
 import pl.edu.pg.menu.caffemenu.repository.MenuRepository;
 
 import java.util.*;
@@ -19,16 +19,16 @@ public class MenuService {
 
 
 
-    public void create(Menu menu) {
-        menuRepository.save(menu);
+    public void create(Cinema cinema) {
+        menuRepository.save(cinema);
 
     }
 
-    public List<Menu> findAll() {
+    public List<Cinema> findAll() {
         return menuRepository.findAll();
     }
 
-    public Menu findById(UUID uuid) {
+    public Cinema findById(UUID uuid) {
         return this.menuRepository
                 .findById(uuid)
                 .orElseThrow(() -> new EntityNotFoundException("Menu not found with id: " + uuid));

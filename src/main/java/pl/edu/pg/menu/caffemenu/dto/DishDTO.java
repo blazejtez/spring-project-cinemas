@@ -1,11 +1,10 @@
 package pl.edu.pg.menu.caffemenu.dto;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import pl.edu.pg.menu.caffemenu.entity.Dish;
+import pl.edu.pg.menu.caffemenu.entity.Showtime;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @EqualsAndHashCode
-public class DishDTO implements Comparable<Dish> {
+public class DishDTO implements Comparable<Showtime> {
     @Id
     private UUID id;
 
@@ -24,13 +23,13 @@ public class DishDTO implements Comparable<Dish> {
 
     private String menuName;
 
-    public static DishDTO fromEntity(Dish dish)
+    public static DishDTO fromEntity(Showtime showtime)
     {
         DishDTO dishDTO = new DishDTO();
-        dishDTO.setId(dish.getId());
-        dishDTO.setName(dish.getName());
-        dishDTO.setPrice(dish.getPrice());
-        dishDTO.setMenuName(dish.getMenu().getName());
+        dishDTO.setId(showtime.getId());
+        dishDTO.setName(showtime.getName());
+        dishDTO.setPrice(showtime.getPrice());
+        dishDTO.setMenuName(showtime.getCinema().getName());
         return dishDTO;
     }
 
@@ -39,7 +38,7 @@ public class DishDTO implements Comparable<Dish> {
     }
 
     @Override
-    public int compareTo(Dish o) {
+    public int compareTo(Showtime o) {
         return this.price.compareTo(o.getPrice());
     }
 

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pg.menu.caffemenu.dto.MenuReadDTO;
 import pl.edu.pg.menu.caffemenu.dto.MenusReadDTO;
-import pl.edu.pg.menu.caffemenu.entity.Menu;
+import pl.edu.pg.menu.caffemenu.entity.Cinema;
 import pl.edu.pg.menu.caffemenu.function.MenuToDeleteMenuDTO;
 import pl.edu.pg.menu.caffemenu.function.MenuToMenuReadDTO;
 import pl.edu.pg.menu.caffemenu.function.MenuToMenuUpdateDTO;
@@ -39,8 +39,8 @@ public class MenuController {
     @ResponseBody
     ResponseEntity<MenusReadDTO> getMenus()
     {
-        List<Menu> menus = this.menuService.findAll();
-        MenusReadDTO menusReadDTO = this.MenusToMenusReadDTO.apply(menus);
+        List<Cinema> cinemas = this.menuService.findAll();
+        MenusReadDTO menusReadDTO = this.MenusToMenusReadDTO.apply(cinemas);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "DishController");
         return ResponseEntity.accepted().headers(headers).body(menusReadDTO);
@@ -61,7 +61,7 @@ public class MenuController {
     {
         try
         {
-            Menu menu = this.menuService.findById(uuid);
+            Cinema cinema = this.menuService.findById(uuid);
             this.menuService.deleteById(uuid);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "DishController");
@@ -81,12 +81,12 @@ public class MenuController {
     @ResponseBody
     ResponseEntity<MenuReadDTO> getMenu(@PathVariable UUID uuid)
     {
-        Menu menu = this.menuService.findById(uuid);
+        Cinema cinema = this.menuService.findById(uuid);
         MenuReadDTO menuReadDTO = MenuReadDTO
                 .builder()
-                .name(menu.getName())
-                .endDate(menu.getEndDate())
-                .startDate(menu.getStartDate())
+                .name(cinema.getName())
+                .endDate(cinema.getEndDate())
+                .startDate(cinema.getStartDate())
                 .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "DishController");

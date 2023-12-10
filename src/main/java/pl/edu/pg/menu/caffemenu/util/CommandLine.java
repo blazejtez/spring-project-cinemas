@@ -2,14 +2,13 @@ package pl.edu.pg.menu.caffemenu.util;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import pl.edu.pg.menu.caffemenu.entity.Dish;
-import pl.edu.pg.menu.caffemenu.entity.Menu;
+import pl.edu.pg.menu.caffemenu.entity.Showtime;
+import pl.edu.pg.menu.caffemenu.entity.Cinema;
 import pl.edu.pg.menu.caffemenu.service.DishService;
 import pl.edu.pg.menu.caffemenu.service.MenuService;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -41,11 +40,11 @@ public class CommandLine implements CommandLineRunner {
             command = scanner.next();
             switch (command) {
                 case "list_menus" -> {
-                    List<Menu> response = this.menuService.findAll();
+                    List<Cinema> response = this.menuService.findAll();
                     response.forEach(System.out::println);
                 }
                 case "list_dishes" -> {
-                    List<Dish> response = this.dishService.findAll();
+                    List<Showtime> response = this.dishService.findAll();
                     response.forEach(System.out::println);
                 }
                 case "add_dish" -> {
@@ -85,15 +84,15 @@ public class CommandLine implements CommandLineRunner {
                         continue;
                     }
 
-                    Menu menu = this.menuService.findById(menuUuid);
-                    Dish dish = Dish.builder()
+                    Cinema cinema = this.menuService.findById(menuUuid);
+                    Showtime showtime = Showtime.builder()
                             .id(uuid)
                             .name(name)
                             .price(price)
-                            .menu(menu)
+                            .cinema(cinema)
                             .build();
                     try {
-                        this.dishService.create(dish);;
+                        this.dishService.create(showtime);;
                     } catch (Exception e) {
                         System.out.println("Bad Request");
                     }

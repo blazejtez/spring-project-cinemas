@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "dishes")
 @ToString
-public class Dish implements Comparable<Dish>, Serializable {
+public class Showtime implements Comparable<Showtime>, Serializable {
     @Id
     private UUID id;
 
@@ -26,11 +26,11 @@ public class Dish implements Comparable<Dish>, Serializable {
 
     @ManyToOne
     @JoinColumn(name = "menu")
-    private Menu menu;
+    private Cinema cinema;
 
 
     @Override
-    public int compareTo(Dish o) {
+    public int compareTo(Showtime o) {
         return this.price.compareTo(o.getPrice());
     }
 
