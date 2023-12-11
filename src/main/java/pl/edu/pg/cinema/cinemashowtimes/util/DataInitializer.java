@@ -5,12 +5,16 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.edu.pg.cinema.cinemashowtimes.dto.CinemaCreateDTO;
+import pl.edu.pg.cinema.cinemashowtimes.dto.ShowtimeCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.entity.Cinema;
 import pl.edu.pg.cinema.cinemashowtimes.function.CinemaToCinemaCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.service.CinemaService;
 import pl.edu.pg.cinema.cinemashowtimes.service.ShowtimeService;
 
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import java.util.Date;
 
@@ -29,20 +33,32 @@ public class DataInitializer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Cinema krewetka = Cinema.builder()
-                .id(UUID.fromString("1318ad0e-d021-4662-b962-6d419459cfc5"))
+        CinemaCreateDTO krewetkaDTO = CinemaCreateDTO.builder()
                 .name("Krewetka Cinema")
                 .street("Karmelicka 1")
                 .city("Gdansk")
                 .zipCode("80-434")
                 .employeesNumber(20) // Assuming there are 20 employees
                 .phoneNumber("555-1234")
-                .description("A fantastic cinema experience")
                 .openingDate(new Date())
                 .build();
-        CinemaCreateDTO krewetkaDTO = cinemaToCinemaCreateDTO.apply(krewetka);
         cinemaService.create(krewetkaDTO);
-}
+
+        List<Cinema> cinemas = cinemaService.findAll();
+
+
+        ShowtimeCreateDTO showtime = ShowtimeCreateDTO
+                .builder()
+                .movieTitle("Dancing in the Dark")
+                .showRoomName("Big Hall")
+                .numberOfTickets(100)
+                .screeningTime(LocalDateTime.now())
+                .ticketPrice(new BigDecimal("19.99"))
+                .cinema(cinemas.get(0).getId())
+                .build();
+        showtimeService.create(showtime, null);
+
+    }
     @SneakyThrows
     private byte[] getResourceAsByteArray(String name) {
         try (InputStream is = this.getClass().getResourceAsStream(name)) {

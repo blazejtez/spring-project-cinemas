@@ -49,24 +49,24 @@ public class ShowtimeController {
         return ResponseEntity.accepted().headers(headers).body(showtimesReadDTO);
     }
 
-    @GetMapping("api/cinemas/{cinemaUuid}/showtimes/{showtimeUuid}")
+    @GetMapping("api/cinemas/{cinemaUuid}/showtimes/")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    ResponseEntity<ShowtimesReadDTO> getCinemaShowtimes()
+    ResponseEntity<ShowtimesReadDTO> getCinemaShowtimes(@PathVariable UUID cinemaUuid)
     {
-        List<Showtime> showtimes = this.showtimeService.findAll();
+        List<Showtime> showtimes = this.showtimeService.findFromCinema(cinemaUuid);
         ShowtimesReadDTO showtimesReadDTO = this.showtimesToShowtimesReadDTO.apply(showtimes);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "ShowtimeController");
         return ResponseEntity.accepted().headers(headers).body(showtimesReadDTO);
     }
 
-    @PostMapping("api/cinemas/{cinemaUuid}/showtimes/{showtimeUuid}")
+    @PostMapping("api/cinemas/{cinemaUuid}/showtimes/")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    ResponseEntity<String> postShowtime(@RequestBody ShowtimeCreateDTO showtimeCreateDTO)
+    ResponseEntity<String> postShowtime(@RequestBody ShowtimeCreateDTO showtimeCreateDTO, @RequestParam UUID cinemaUuid)
     {
-        this.showtimeService.create(showtimeCreateDTO);
+        this.showtimeService.create(showtimeCreateDTO, cinemaUuid);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "ShowtimesController");
         return ResponseEntity.accepted().headers(headers).body("Successfully created");

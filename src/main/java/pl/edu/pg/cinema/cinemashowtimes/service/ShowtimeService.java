@@ -3,6 +3,7 @@ package pl.edu.pg.cinema.cinemashowtimes.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.edu.pg.cinema.cinemashowtimes.dto.ShowtimeCreateDTO;
+import pl.edu.pg.cinema.cinemashowtimes.entity.Cinema;
 import pl.edu.pg.cinema.cinemashowtimes.repository.ShowtimeRepository;
 import pl.edu.pg.cinema.cinemashowtimes.entity.Showtime;
 
@@ -18,11 +19,14 @@ public class ShowtimeService {
     }
 
 
-
-    public void create(ShowtimeCreateDTO showtime) {
+    public void create(ShowtimeCreateDTO showtime, UUID id) {
+        if(id==null)
+        {
+            id = UUID.randomUUID();
+        }
         Showtime showtimeEntity = Showtime
                 .builder()
-                .id(UUID.randomUUID())
+                .id(id)
                 .movieTitle(showtime.getMovieTitle())
                 .numberOfTickets(showtime.getNumberOfTickets())
                 .screeningTime(showtime.getScreeningTime())
@@ -32,9 +36,8 @@ public class ShowtimeService {
                         +showtime.getMovieTitle()
                         +" with "
                         +showtime.getNumberOfTickets()
-                        +" still available, soon, on"
+                        +" tickets still available, soon, see you on"
                         +showtime.getScreeningTime())
-                //TODO what to do about the cinema...?
                 .build();
         showtimeRepository.save(showtimeEntity);
     }
@@ -55,5 +58,11 @@ public class ShowtimeService {
     }
 
     public void deleteById(UUID uuid) {
+    }
+
+    public List<Showtime> findFromCinema(UUID cinemaUuid) {
+        return findAll().stream()
+                .filter(item -> item.getCinema().getId().equals(cinemaUuid))
+                .toList();
     }
 }

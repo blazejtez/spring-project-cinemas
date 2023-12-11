@@ -18,4 +18,5 @@ public class ShowtimeCreateDTO {
     private BigDecimal ticketPrice;
     private int numberOfTickets;
     private LocalDateTime screeningTime;
+    private UUID cinema;
 }
