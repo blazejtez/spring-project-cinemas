@@ -11,6 +11,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface DishRepository extends JpaRepository<Showtime, UUID> {
-    Optional<List<Showtime>> findByMenu(Cinema cinema);
+public interface ShowtimeRepository extends JpaRepository<Showtime, UUID> {
+    Optional<List<Showtime>> findByCinema(Cinema cinema);
 }

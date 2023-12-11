@@ -3,35 +3,35 @@ package pl.edu.pg.menu.cinemashowtimes.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.edu.pg.menu.cinemashowtimes.entity.Showtime;
-import pl.edu.pg.menu.cinemashowtimes.repository.DishRepository;
+import pl.edu.pg.menu.cinemashowtimes.repository.ShowtimeRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class DishService {
-    private DishRepository dishRepository;
-    public DishService(DishRepository dishRepository) {
-        this.dishRepository = dishRepository;
+public class ShowtimeService {
+    private ShowtimeRepository showtimeRepository;
+    public ShowtimeService(ShowtimeRepository showtimeRepository) {
+        this.showtimeRepository = showtimeRepository;
     }
 
 
 
     public void create(Showtime showtime) {
-        dishRepository.save(showtime);
+        showtimeRepository.save(showtime);
     }
 
     public List<Showtime> findAll() {
-        return this.dishRepository.findAll();
+        return this.showtimeRepository.findAll();
     }
     public void delete(UUID uuid) {
-        Optional<Showtime> optionalDish = this.dishRepository.findById(uuid);
-        optionalDish.ifPresent(dish -> this.dishRepository.delete(dish));
+        Optional<Showtime> optionalDish = this.showtimeRepository.findById(uuid);
+        optionalDish.ifPresent(dish -> this.showtimeRepository.delete(dish));
     }
 
     public Showtime findById(UUID uuid) {
-        Showtime showtime = this.dishRepository
+        Showtime showtime = this.showtimeRepository
                 .findById(uuid)
                 .orElseThrow(() -> new EntityNotFoundException("Dish not found with id: " + uuid));
         return showtime;

@@ -4,8 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.edu.pg.menu.cinemashowtimes.entity.Showtime;
 import pl.edu.pg.menu.cinemashowtimes.entity.Cinema;
-import pl.edu.pg.menu.cinemashowtimes.service.DishService;
-import pl.edu.pg.menu.cinemashowtimes.service.MenuService;
+import pl.edu.pg.menu.cinemashowtimes.service.ShowtimeService;
+import pl.edu.pg.menu.cinemashowtimes.service.CinemaService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,12 +15,12 @@ import java.util.UUID;
 @Component
 public class CommandLine implements CommandLineRunner {
 
-    private final DishService dishService;
-    private final MenuService menuService;
+    private final ShowtimeService showtimeService;
+    private final CinemaService cinemaService;
 
-    public CommandLine(DishService dishService, MenuService menuService) {
-        this.dishService = dishService;
-        this.menuService = menuService;
+    public CommandLine(ShowtimeService showtimeService, CinemaService cinemaService) {
+        this.showtimeService = showtimeService;
+        this.cinemaService = cinemaService;
     }
 
     @Override
@@ -40,11 +40,11 @@ public class CommandLine implements CommandLineRunner {
             command = scanner.next();
             switch (command) {
                 case "list_menus" -> {
-                    List<Cinema> response = this.menuService.findAll();
+                    List<Cinema> response = this.cinemaService.findAll();
                     response.forEach(System.out::println);
                 }
                 case "list_dishes" -> {
-                    List<Showtime> response = this.dishService.findAll();
+                    List<Showtime> response = this.showtimeService.findAll();
                     response.forEach(System.out::println);
                 }
                 case "add_dish" -> {
@@ -84,7 +84,7 @@ public class CommandLine implements CommandLineRunner {
                         continue;
                     }
 
-                    Cinema cinema = this.menuService.findById(menuUuid);
+                    Cinema cinema = this.cinemaService.findById(menuUuid);
                     Showtime showtime = Showtime.builder()
                             .id(uuid)
                             .name(name)
@@ -92,7 +92,7 @@ public class CommandLine implements CommandLineRunner {
                             .cinema(cinema)
                             .build();
                     try {
-                        this.dishService.create(showtime);;
+                        this.showtimeService.create(showtime);;
                     } catch (Exception e) {
                         System.out.println("Bad Request");
                     }
@@ -101,7 +101,7 @@ public class CommandLine implements CommandLineRunner {
                 case "delete_dish" -> {
                     System.out.println("Enter dish UUID");
                     String uuid = scanner.next();
-                    this.dishService.delete(UUID.fromString(uuid));
+                    this.showtimeService.delete(UUID.fromString(uuid));
                 }
                 case "quit" -> {
                     break main_loop;

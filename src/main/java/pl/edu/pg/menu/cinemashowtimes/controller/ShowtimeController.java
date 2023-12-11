@@ -13,25 +13,25 @@ import pl.edu.pg.menu.cinemashowtimes.function.DishToDeleteDishDTO;
 import pl.edu.pg.menu.cinemashowtimes.function.DishToDishReadDTO;
 import pl.edu.pg.menu.cinemashowtimes.function.DishToDishUpdateDTO;
 import pl.edu.pg.menu.cinemashowtimes.function.DishesToDishesReadDTO;
-import pl.edu.pg.menu.cinemashowtimes.service.DishService;
+import pl.edu.pg.menu.cinemashowtimes.service.ShowtimeService;
 
 import java.util.List;
 import java.util.UUID;
 
-public class DishController {
-    public DishController(DishService dishService,
-                          DishesToDishesReadDTO dishesToDishesReadDTO,
-                          DishToDeleteDishDTO dishToDeleteDishDTO,
-                          DishToDishReadDTO dishToDishReadDTO,
-                          DishToDishUpdateDTO dishToDishUpdateDTO) {
-        this.dishService = dishService;
+public class ShowtimeController {
+    public ShowtimeController(ShowtimeService showtimeService,
+                              DishesToDishesReadDTO dishesToDishesReadDTO,
+                              DishToDeleteDishDTO dishToDeleteDishDTO,
+                              DishToDishReadDTO dishToDishReadDTO,
+                              DishToDishUpdateDTO dishToDishUpdateDTO) {
+        this.showtimeService = showtimeService;
         this.dishesToDishesReadDTO = dishesToDishesReadDTO;
         this.dishToDeleteDishDTO = dishToDeleteDishDTO;
         this.dishToDishReadDTO = dishToDishReadDTO;
         this.dishToDishUpdateDTO = dishToDishUpdateDTO;
     }
 
-    private final DishService dishService;
+    private final ShowtimeService showtimeService;
     private final DishesToDishesReadDTO dishesToDishesReadDTO;
     private final DishToDeleteDishDTO dishToDeleteDishDTO;
     private final DishToDishReadDTO dishToDishReadDTO;
@@ -46,7 +46,7 @@ public class DishController {
     public DishesReadDTO getDishes()
     {
         List<Showtime> showtimes;
-        showtimes = this.dishService.findAll();
+        showtimes = this.showtimeService.findAll();
         return dishesToDishesReadDTO.apply(showtimes);
     }
 
@@ -64,7 +64,7 @@ public class DishController {
     @ResponseBody
     public ResponseEntity<Showtime> getDish(@PathVariable UUID uuid)
     {
-        Showtime showtime = this.dishService.findById(uuid);
+        Showtime showtime = this.showtimeService.findById(uuid);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "DishController");
         return ResponseEntity.accepted().headers(headers).body(showtime);

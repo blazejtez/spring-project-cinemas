@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "showtime")
+@Table(name = "showtimes")
 @ToString
 public class Showtime implements Comparable<Showtime>, Serializable {
     @Id

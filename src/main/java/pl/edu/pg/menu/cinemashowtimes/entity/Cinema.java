@@ -26,7 +26,7 @@ import java.util.UUID;
 @Builder
 @ToString
 @Entity
-@Table(name = "cinema")
+@Table(name = "cinemas")
 public class Cinema implements Comparable<Cinema>, Serializable {
 
     @Id
@@ -42,7 +42,7 @@ public class Cinema implements Comparable<Cinema>, Serializable {
     private LocalDate endDate;
 
 //    @Singular
-    @OneToMany(mappedBy = "showtime", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY)
 //    @ToString.Exclude
 //    @EqualsAndHashCode.Exclude
 //    @JsonIgnore

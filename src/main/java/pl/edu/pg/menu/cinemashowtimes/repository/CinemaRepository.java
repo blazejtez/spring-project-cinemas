@@ -7,7 +7,7 @@ import pl.edu.pg.menu.cinemashowtimes.entity.Cinema;
 import java.util.UUID;
 
 @Repository
-public interface MenuRepository extends JpaRepository<Cinema, UUID> {
+public interface CinemaRepository extends JpaRepository<Cinema, UUID> {
 
 
 }

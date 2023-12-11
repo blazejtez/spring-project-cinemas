@@ -13,21 +13,21 @@ import pl.edu.pg.menu.cinemashowtimes.function.MenuToDeleteMenuDTO;
 import pl.edu.pg.menu.cinemashowtimes.function.MenuToMenuReadDTO;
 import pl.edu.pg.menu.cinemashowtimes.function.MenuToMenuUpdateDTO;
 import pl.edu.pg.menu.cinemashowtimes.function.MenuToMenusReadDTO;
-import pl.edu.pg.menu.cinemashowtimes.service.MenuService;
+import pl.edu.pg.menu.cinemashowtimes.service.CinemaService;
 
 import java.util.List;
 import java.util.UUID;
 @RestController
-public class MenuController {
-    private final MenuService menuService;
+public class CinemaController {
+    private final CinemaService cinemaService;
     private final MenuToMenusReadDTO MenusToMenusReadDTO;
     private final MenuToDeleteMenuDTO MenuToDeleteMenuDTO;
     private final MenuToMenuReadDTO MenuToMenuReadDTO;
     private final MenuToMenuUpdateDTO MenuToMenuUpdateDTO;
 
     @Autowired
-    public MenuController(MenuService menuService, MenuToMenusReadDTO menusToMenusReadDTO, pl.edu.pg.menu.cinemashowtimes.function.MenuToDeleteMenuDTO menuToDeleteMenuDTO, pl.edu.pg.menu.cinemashowtimes.function.MenuToMenuReadDTO menuToMenuReadDTO, pl.edu.pg.menu.cinemashowtimes.function.MenuToMenuUpdateDTO menuToMenuUpdateDTO) {
-        this.menuService = menuService;
+    public CinemaController(CinemaService cinemaService, MenuToMenusReadDTO menusToMenusReadDTO, pl.edu.pg.menu.cinemashowtimes.function.MenuToDeleteMenuDTO menuToDeleteMenuDTO, pl.edu.pg.menu.cinemashowtimes.function.MenuToMenuReadDTO menuToMenuReadDTO, pl.edu.pg.menu.cinemashowtimes.function.MenuToMenuUpdateDTO menuToMenuUpdateDTO) {
+        this.cinemaService = cinemaService;
         MenusToMenusReadDTO = menusToMenusReadDTO;
         MenuToDeleteMenuDTO = menuToDeleteMenuDTO;
         MenuToMenuReadDTO = menuToMenuReadDTO;
@@ -39,7 +39,7 @@ public class MenuController {
     @ResponseBody
     ResponseEntity<MenusReadDTO> getMenus()
     {
-        List<Cinema> cinemas = this.menuService.findAll();
+        List<Cinema> cinemas = this.cinemaService.findAll();
         MenusReadDTO menusReadDTO = this.MenusToMenusReadDTO.apply(cinemas);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "DishController");
@@ -61,8 +61,8 @@ public class MenuController {
     {
         try
         {
-            Cinema cinema = this.menuService.findById(uuid);
-            this.menuService.deleteById(uuid);
+            Cinema cinema = this.cinemaService.findById(uuid);
+            this.cinemaService.deleteById(uuid);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "DishController");
             return ResponseEntity.accepted().headers(headers).body("Succesfully deleted "+ uuid.toString());
@@ -81,7 +81,7 @@ public class MenuController {
     @ResponseBody
     ResponseEntity<MenuReadDTO> getMenu(@PathVariable UUID uuid)
     {
-        Cinema cinema = this.menuService.findById(uuid);
+        Cinema cinema = this.cinemaService.findById(uuid);
         MenuReadDTO menuReadDTO = MenuReadDTO
                 .builder()
                 .name(cinema.getName())
