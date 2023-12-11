@@ -6,17 +6,9 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-//kina:
-// int employeeCount
-// string zip code
-// string street
-// string city
-// string phoneNumber
-// string description
-
 
 @Getter
 @Setter
@@ -33,28 +25,33 @@ public class Cinema implements Comparable<Cinema>, Serializable {
     private UUID id;
 
     private String name;
-    private String address;
+    private String street;
+    private String city;
+    @Column(name = "zip_code")
+    private String zipCode;
     @Column(name = "employees_number")
     private int employeesNumber;
-    @Column(name = "start_date")
-    private LocalDate startDate;
-    @Column(name = "end_date")
-    private LocalDate endDate;
-
-//    @Singular
-    @OneToMany(mappedBy = "cinema", cascade = CascadeType.REMOVE, fetch=FetchType.LAZY)
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    @JsonIgnore
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    private String description;
+    @Column(name = "opening_date")
+    private Date openingDate;
+        @Singular
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
     private List<Showtime> showtimes;
-//    @Override
-//    public String toString() {
-//        return "Menu [id=" + id + ", name=" + name + ", start date=" + startDate + ", end date=" + endDate + "]";
-//    }
+
+    @Override
+    public String toString() {
+        throw new RuntimeException();
+    }
+
     @Override
     public int compareTo(Cinema o) {
         {
-            return this.startDate.compareTo(o.getStartDate());
+            return this.openingDate.compareTo(o.getOpeningDate());
         }
     }
 }
