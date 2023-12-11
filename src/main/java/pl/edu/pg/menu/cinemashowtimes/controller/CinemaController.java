@@ -6,8 +6,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.pg.menu.cinemashowtimes.dto.MenuReadDTO;
-import pl.edu.pg.menu.cinemashowtimes.dto.MenusReadDTO;
+import pl.edu.pg.menu.cinemashowtimes.dto.CinemaReadDTO;
+import pl.edu.pg.menu.cinemashowtimes.dto.CinemasReadDTO;
 import pl.edu.pg.menu.cinemashowtimes.entity.Cinema;
 import pl.edu.pg.menu.cinemashowtimes.function.MenuToDeleteMenuDTO;
 import pl.edu.pg.menu.cinemashowtimes.function.MenuToMenuReadDTO;
@@ -37,13 +37,13 @@ public class CinemaController {
     @GetMapping("api/menus")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    ResponseEntity<MenusReadDTO> getMenus()
+    ResponseEntity<CinemasReadDTO> getMenus()
     {
         List<Cinema> cinemas = this.cinemaService.findAll();
-        MenusReadDTO menusReadDTO = this.MenusToMenusReadDTO.apply(cinemas);
+        CinemasReadDTO cinemasReadDTO = this.MenusToMenusReadDTO.apply(cinemas);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "DishController");
-        return ResponseEntity.accepted().headers(headers).body(menusReadDTO);
+        return ResponseEntity.accepted().headers(headers).body(cinemasReadDTO);
     }
 //
 //    @PostMapping("api/menus")
@@ -79,10 +79,10 @@ public class CinemaController {
     @GetMapping("api/menus/{uuid}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    ResponseEntity<MenuReadDTO> getMenu(@PathVariable UUID uuid)
+    ResponseEntity<CinemaReadDTO> getMenu(@PathVariable UUID uuid)
     {
         Cinema cinema = this.cinemaService.findById(uuid);
-        MenuReadDTO menuReadDTO = MenuReadDTO
+        CinemaReadDTO cinemaReadDTO = CinemaReadDTO
                 .builder()
                 .name(cinema.getName())
                 .endDate(cinema.getEndDate())
@@ -90,7 +90,7 @@ public class CinemaController {
                 .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "DishController");
-        return ResponseEntity.accepted().headers(headers).body(menuReadDTO);
+        return ResponseEntity.accepted().headers(headers).body(cinemaReadDTO);
     }
 
 }

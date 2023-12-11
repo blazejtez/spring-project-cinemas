@@ -1,6 +1,11 @@
 package pl.edu.pg.menu.cinemashowtimes.dto;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 import pl.edu.pg.menu.cinemashowtimes.entity.Showtime;
 
@@ -15,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class CinemaUpdateDTO {
+public class CinemaReadDTO {
     private String name;
     private String street;
     private String city;
@@ -24,5 +29,4 @@ public class CinemaUpdateDTO {
     private String phoneNumber;
     private String description;
     private Date openingDate;
-    private List<Showtime> showtimes;
 }

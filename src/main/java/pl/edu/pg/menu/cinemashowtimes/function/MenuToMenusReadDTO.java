@@ -1,18 +1,18 @@
 package pl.edu.pg.menu.cinemashowtimes.function;
 
 import org.springframework.stereotype.Component;
-import pl.edu.pg.menu.cinemashowtimes.dto.MenusReadDTO;
+import pl.edu.pg.menu.cinemashowtimes.dto.CinemasReadDTO;
 import pl.edu.pg.menu.cinemashowtimes.entity.Cinema;
 
 import java.util.List;
 import java.util.function.Function;
 @Component
-public class MenuToMenusReadDTO implements Function<List<Cinema>, MenusReadDTO> {
+public class MenuToMenusReadDTO implements Function<List<Cinema>, CinemasReadDTO> {
     @Override
-    public MenusReadDTO apply(List<Cinema> entities) {
-        return MenusReadDTO.builder()
-                .menus(entities.stream()
-                        .map( menu -> MenusReadDTO.Menu.builder()
+    public CinemasReadDTO apply(List<Cinema> entities) {
+        return CinemasReadDTO.builder()
+                .cinemas(entities.stream()
+                        .map( menu -> CinemasReadDTO.Cinema.builder()
                                 .id(menu.getId())
                                 .name(menu.getName())
                                 .build())
