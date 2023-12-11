@@ -22,11 +22,11 @@ import java.util.UUID;
 public class Showtime implements Comparable<Showtime>, Serializable {
     @Id
     private UUID id;
-
-    private String name;
-
-    private BigDecimal price;
-
+    private String movieTitle;
+    private String showRoomName;
+    private BigDecimal ticketPrice;
+    private int ticketsLeft;
+    private int ticketsAll;
     @ManyToOne
     @JoinColumn(name = "cinema")
     private Cinema cinema;
@@ -34,7 +34,7 @@ public class Showtime implements Comparable<Showtime>, Serializable {
 
     @Override
     public int compareTo(Showtime o) {
-        return this.price.compareTo(o.getPrice());
+        return this.ticketPrice.compareTo(o.getTicketPrice());
     }
 
 
