@@ -1,7 +1,6 @@
 package pl.edu.pg.menu.cinemashowtimes.function;
 
 import org.springframework.stereotype.Component;
-import pl.edu.pg.menu.cinemashowtimes.dto.DeleteMenuDTO;
 import pl.edu.pg.menu.cinemashowtimes.entity.Cinema;
 
 import java.util.function.Function;

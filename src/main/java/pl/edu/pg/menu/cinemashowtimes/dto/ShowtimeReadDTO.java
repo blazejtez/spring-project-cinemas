@@ -11,8 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class DishReadDTO {
-    private String name;
-    private BigDecimal price;
-
+public class ShowtimeReadDTO {
+    private String title;
+    private BigDecimal ticketPrice;
 }

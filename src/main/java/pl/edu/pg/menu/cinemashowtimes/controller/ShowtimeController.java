@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import pl.edu.pg.menu.cinemashowtimes.dto.DishesReadDTO;
+import pl.edu.pg.menu.cinemashowtimes.dto.ShowtimesReadDTO;
 import pl.edu.pg.menu.cinemashowtimes.entity.Showtime;
 import pl.edu.pg.menu.cinemashowtimes.function.DishToDeleteDishDTO;
 import pl.edu.pg.menu.cinemashowtimes.function.DishToDishReadDTO;
@@ -43,7 +43,7 @@ public class ShowtimeController {
     @GetMapping("api/dishes")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public DishesReadDTO getDishes()
+    public ShowtimesReadDTO getDishes()
     {
         List<Showtime> showtimes;
         showtimes = this.showtimeService.findAll();

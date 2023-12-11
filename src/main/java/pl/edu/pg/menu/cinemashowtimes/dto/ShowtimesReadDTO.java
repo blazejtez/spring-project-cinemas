@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class DishesReadDTO {
+public class ShowtimesReadDTO {
     @Getter
     @Setter
     @Builder(access = AccessLevel.PUBLIC)
@@ -20,11 +20,11 @@ public class DishesReadDTO {
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     @ToString
     @EqualsAndHashCode
-    public static class Dish {
+    public static class Showtime {
         private UUID id;
-        private String name;
+        private String description;
 
     }
     @Singular("dish")
-    private List<Dish> dishes;
+    private List<Showtime> showtimes;
 }

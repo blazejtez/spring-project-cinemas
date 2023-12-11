@@ -12,5 +12,4 @@ import java.util.UUID;
 
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, UUID> {
-    Optional<List<Showtime>> findByCinema(Cinema cinema);
 }

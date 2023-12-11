@@ -1,9 +1,11 @@
 package pl.edu.pg.menu.cinemashowtimes.dto;
 
+import jakarta.persistence.Column;
 import lombok.*;
 import pl.edu.pg.menu.cinemashowtimes.entity.Showtime;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -13,9 +15,14 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @ToString
 @EqualsAndHashCode
-public class MenuUpdateDTO {
+public class CinemaUpdateDTO {
     private String name;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String street;
+    private String city;
+    private String zipCode;
+    private int employeesNumber;
+    private String phoneNumber;
+    private String description;
+    private Date openingDate;
     private List<Showtime> showtimes;
 }
