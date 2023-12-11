@@ -1,58 +1,44 @@
-### Cinemas Endpoints
-
+#### Cinemas Endpoints
+#
 ### Get all cinemas
 GET http://localhost:8080/api/cinemas
 
 ### Get single existing cinema
 GET http://localhost:8080/api/cinemas/b5d6e3db-aa5c-4724-8409-3c42a914dc98
 
-### Get single non existing cinema
-GET http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
-
-### Create a new cinema
-POST http://localhost:8080/api/cinemas
-Content-Type: application/json
-{
-  "name": "Cinema Name",
-  "street": "Cinema Street",
-  "city": "Cinema City",
-  "zipCode": "12345",
-  "employeesNumber": 10,
-  "phoneNumber": "123-456-7890",
-  "description": "Cinema Description",
-  "openingDate": "2023-01-01"
-}
-
-### Get showtimes for a cinema
-GET http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5/showtimes
-
-### Delete a cinema
-DELETE http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5
-
-### Showtimes Endpoints
+#### Get single non existing cinema
+#GET http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
 #
-#### Get all showtimes
-#GET http://localhost:8080/api/showtimes
-#
-#### Get single showtime
-#GET http://localhost:8080/api/showtimes/{id}
-#
-#### Create a new showtime
-#POST http://localhost:8080/api/showtimes
+#### Create a new cinema
+#POST http://localhost:8080/api/cinemas
 #Content-Type: application/json
-#
 #{
-#  "movieTitle": "Movie Title",
-#  "showRoomName": "Show Room 1",
-#  "ticketPrice": 10.5,
-#  "numberOfTickets": 100,
-#  "cinema": {
-#    "id": "47a9767c-9203-11ee-b9d1-0242ac120002"
-#  }
+#  "name": "Cinema Name",
+#  "street": "Cinema Street",
+#  "city": "Cinema City",
+#  "zipCode": "12345",
+#  "employeesNumber": 10,
+#  "phoneNumber": "123-456-7890",
+#  "description": "Cinema Description",
+#  "openingDate": "2023-01-01"
 #}
 #
-#### Delete a showtime
-#DELETE http://localhost:8080/api/showtimes/{id}
-#
-#### Get cinema for a showtime
-#GET http://localhost:8080/api/showtimes/{id}/cinema
+#### Get showtimes for a cinema
+GET http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5/showtimes
+
+#### Delete a cinema
+#DELETE http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5
+
+## Showtimes Endpoints
+
+### Get all showtimes
+GET http://localhost:8080/api/showtimes
+
+### Get single showtime
+GET http://localhost:8080/api/showtimes/b5d6e3db-aa5c-4724-8409-3c42a914dc98
+
+### Delete a showtime
+DELETE http://localhost:8080/api/showtimes/b5d6e3db-aa5c-4724-8409-3c42a914dc98
+
+### Get showtimes from one cinema
+GET http://localhost:8080/api/cinemas/b5d6e3db-aa5c-4724-8409-3c42a914dc98/showtimes/b5d6e3db-aa5c-4724-8409-3c42a914dc98

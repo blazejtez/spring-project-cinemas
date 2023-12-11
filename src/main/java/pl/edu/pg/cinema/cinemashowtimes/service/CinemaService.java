@@ -38,6 +38,7 @@ public class CinemaService {
                 .build();
         cinemaRepository.save(entity);
 
+
     }
 
     public List<Cinema> findAll() {
