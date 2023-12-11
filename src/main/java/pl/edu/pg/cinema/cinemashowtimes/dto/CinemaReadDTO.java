@@ -19,6 +19,5 @@ public class CinemaReadDTO {
     private String zipCode;
     private int employeesNumber;
     private String phoneNumber;
-    private String description;
     private Date openingDate;
 }

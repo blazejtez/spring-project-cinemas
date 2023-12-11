@@ -4,15 +4,14 @@
 GET http://localhost:8080/api/cinemas
 
 ### Get single existing cinema
-GET http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5
+GET http://localhost:8080/api/cinemas/b5d6e3db-aa5c-4724-8409-3c42a914dc98
 
-### Get single existing cinema
+### Get single non existing cinema
 GET http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
 
 ### Create a new cinema
 POST http://localhost:8080/api/cinemas
 Content-Type: application/json
-
 {
   "name": "Cinema Name",
   "street": "Cinema Street",

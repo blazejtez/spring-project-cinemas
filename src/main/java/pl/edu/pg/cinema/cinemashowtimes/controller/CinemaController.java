@@ -76,21 +76,19 @@ public class CinemaController {
         {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Not Found", "CinemaController");
-            return ResponseEntity.accepted().headers(headers).body("Entity with id: " + uuid.toString() + "was not found.");
+            return ResponseEntity.notFound().headers(headers).build();
         }
 
 
     }
     @GetMapping("api/cinemas/{uuid}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     ResponseEntity<CinemaReadDTO> getCinema(@PathVariable UUID uuid)
     {
         try
         {
             Cinema cinema = this.cinemaService.findById(uuid);
-            //TODO
-            this.showtimeService/.
             CinemaReadDTO cinemaReadDTO = cinemaToCinemaReadDTO.apply(cinema);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
@@ -99,9 +97,10 @@ public class CinemaController {
         catch (EntityNotFoundException e) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
-            return ResponseEntity.notFound().headers(headers).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
         }
 
     }
+
 
 }
