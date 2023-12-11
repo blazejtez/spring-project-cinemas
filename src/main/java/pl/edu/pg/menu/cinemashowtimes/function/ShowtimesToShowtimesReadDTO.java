@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.function.Function;
 
 @Component
-public class DishesToDishesReadDTO implements Function<List<Showtime>, ShowtimesReadDTO> {
+public class ShowtimesToShowtimesReadDTO implements Function<List<Showtime>, ShowtimesReadDTO> {
 
     @Override
     public ShowtimesReadDTO apply(List<Showtime> entities) {
         return ShowtimesReadDTO.builder()
                 .showtimes(entities.stream()
-                        .map(dish -> ShowtimesReadDTO.Showtime.builder()
-                                .id(dish.getId())
-                                .description(dish.getName())
+                        .map(showtime -> ShowtimesReadDTO.Showtime.builder()
+                                .id(showtime.getId())
+                                .description(showtime.getMovieTitle() + "at " + showtime.getScreeningTime().toString())
                                 .build())
                         .toList())
                 .build();
