@@ -24,36 +24,36 @@ Content-Type: application/json
   "openingDate": "2023-01-01"
 }
 
-### Delete a cinema
-DELETE http://localhost:8080/api/cinemas/{id}
-
 ### Get showtimes for a cinema
-GET http://localhost:8080/api/cinemas/{id}/showtimes
+GET http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5/showtimes
+
+### Delete a cinema
+DELETE http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5
 
 ### Showtimes Endpoints
-
-### Get all showtimes
-GET http://localhost:8080/api/showtimes
-
-### Get single showtime
-GET http://localhost:8080/api/showtimes/{id}
-
-### Create a new showtime
-POST http://localhost:8080/api/showtimes
-Content-Type: application/json
-
-{
-  "movieTitle": "Movie Title",
-  "showRoomName": "Show Room 1",
-  "ticketPrice": 10.5,
-  "numberOfTickets": 100,
-  "cinema": {
-    "id": "47a9767c-9203-11ee-b9d1-0242ac120002"
-  }
-}
-
-### Delete a showtime
-DELETE http://localhost:8080/api/showtimes/{id}
-
-### Get cinema for a showtime
-GET http://localhost:8080/api/showtimes/{id}/cinema
+#
+#### Get all showtimes
+#GET http://localhost:8080/api/showtimes
+#
+#### Get single showtime
+#GET http://localhost:8080/api/showtimes/{id}
+#
+#### Create a new showtime
+#POST http://localhost:8080/api/showtimes
+#Content-Type: application/json
+#
+#{
+#  "movieTitle": "Movie Title",
+#  "showRoomName": "Show Room 1",
+#  "ticketPrice": 10.5,
+#  "numberOfTickets": 100,
+#  "cinema": {
+#    "id": "47a9767c-9203-11ee-b9d1-0242ac120002"
+#  }
+#}
+#
+#### Delete a showtime
+#DELETE http://localhost:8080/api/showtimes/{id}
+#
+#### Get cinema for a showtime
+#GET http://localhost:8080/api/showtimes/{id}/cinema
