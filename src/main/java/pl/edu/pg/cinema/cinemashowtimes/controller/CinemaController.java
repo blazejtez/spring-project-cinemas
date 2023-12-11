@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.edu.pg.cinema.cinemashowtimes.dto.CinemaCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.dto.CinemaReadDTO;
 import pl.edu.pg.cinema.cinemashowtimes.dto.CinemasReadDTO;
 import pl.edu.pg.cinema.cinemashowtimes.entity.Cinema;
@@ -45,14 +46,17 @@ public class CinemaController {
         headers.add("Responded", "CinemaController");
         return ResponseEntity.accepted().headers(headers).body(cinemasReadDTO);
     }
-//
-//    @PostMapping("api/cinemas")
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    ResponseEntity<String> postMenus(@RequestBody MenuUpdateDTO cinemaUpdateDTO)
-//    {
-//
-//    }
+
+    @PostMapping("api/cinemas")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    ResponseEntity<String> postMenus(@RequestBody CinemaCreateDTO cinemaCreateDTO)
+    {
+        this.cinemaService.create(cinemaCreateDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "CinemaController");
+        return ResponseEntity.accepted().headers(headers).body("File saved successfully!");
+    }
 
     @DeleteMapping("api/cinemas/{uuid}")
     @ResponseStatus(HttpStatus.OK)
