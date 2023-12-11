@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pl.edu.pg.cinema</groupId>
-	<artifactId>CaffeMenu</artifactId>
+	<artifactId>CinemaShowtimes</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CaffeMenu</name>
 	<description>Laboratories for Internet Services</description>
