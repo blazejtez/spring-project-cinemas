@@ -16,7 +16,7 @@ public class ShowtimesToShowtimesReadDTO implements Function<List<Showtime>, Sho
                 .showtimes(entities.stream()
                         .map(showtime -> ShowtimesReadDTO.Showtime.builder()
                                 .id(showtime.getId())
-                                .description(showtime.getMovieTitle() + "at " + showtime.getScreeningTime().toString())
+                                .description(showtime.getDescription())
                                 .build())
                         .toList())
                 .build();
