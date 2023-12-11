@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -26,6 +27,7 @@ public class Showtime implements Comparable<Showtime>, Serializable {
     private String showRoomName;
     private BigDecimal ticketPrice;
     private int numberOfTickets;
+    private LocalDateTime screeningTime;
     @ManyToOne
     @JoinColumn(name = "cinema")
     private Cinema cinema;

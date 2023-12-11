@@ -3,6 +3,7 @@ package pl.edu.pg.menu.cinemashowtimes.dto;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -16,5 +17,6 @@ public class ShowtimeCreateDTO {
     private String showRoomName;
     private BigDecimal ticketPrice;
     private int numberOfTickets;
+    private LocalDateTime screeningTime;
     private UUID cinema;
 }
