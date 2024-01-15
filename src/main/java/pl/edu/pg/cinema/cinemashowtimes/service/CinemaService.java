@@ -20,23 +20,8 @@ public class CinemaService {
 
 
 
-    public void create(CinemaCreateDTO cinema) {
-        Cinema entity = Cinema.builder()
-                .id(UUID.randomUUID())
-                .name(cinema.getName())
-                .city(cinema.getCity())
-                .street(cinema.getStreet())
-                .zipCode(cinema.getZipCode())
-                .openingDate(cinema.getOpeningDate())
-                .employeesNumber(cinema.getEmployeesNumber())
-                .phoneNumber(cinema.getPhoneNumber())
-                .description(cinema.getName()
-                        + " in "
-                        + cinema.getCity()
-                        + ", showing best movies since "
-                        + cinema.getOpeningDate())
-                .build();
-        cinemaRepository.save(entity);
+    public void create(Cinema cinema) {
+        cinemaRepository.save(cinema);
 
     }
 

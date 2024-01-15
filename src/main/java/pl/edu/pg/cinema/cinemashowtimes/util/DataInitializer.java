@@ -51,10 +51,8 @@ public class DataInitializer implements InitializingBean {
                 .builder()
                 .movieTitle("Dancing in the Dark")
                 .showRoomName("Big Hall")
-                .numberOfTickets(100)
                 .screeningTime(LocalDateTime.now())
                 .ticketPrice(new BigDecimal("19.99"))
-                .cinema(cinemas.get(0).getId())
                 .build();
         showtimeService.create(showtime, null);
 

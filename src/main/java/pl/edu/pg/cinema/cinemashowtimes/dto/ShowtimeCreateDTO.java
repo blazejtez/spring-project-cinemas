@@ -16,7 +16,6 @@ public class ShowtimeCreateDTO {
     private String movieTitle;
     private String showRoomName;
     private BigDecimal ticketPrice;
-    private int numberOfTickets;
     private LocalDateTime screeningTime;
-    private UUID cinema;
+    //private UUID cinema; pobierane z URL
 }

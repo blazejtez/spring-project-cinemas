@@ -19,7 +19,7 @@ public class ShowtimeService {
     }
 
 
-    public void create(ShowtimeCreateDTO showtime, UUID id) {
+    public void create(Showtime showtime) {
         if(id==null)
         {
             id = UUID.randomUUID();
@@ -28,16 +28,9 @@ public class ShowtimeService {
                 .builder()
                 .id(id)
                 .movieTitle(showtime.getMovieTitle())
-                .numberOfTickets(showtime.getNumberOfTickets())
                 .screeningTime(showtime.getScreeningTime())
                 .showRoomName(showtime.getShowRoomName())
                 .ticketPrice(showtime.getTicketPrice())
-                .description("Thrilling movie titled: "
-                        +showtime.getMovieTitle()
-                        +" with "
-                        +showtime.getNumberOfTickets()
-                        +" tickets still available, soon, see you on"
-                        +showtime.getScreeningTime())
                 .build();
         showtimeRepository.save(showtimeEntity);
     }

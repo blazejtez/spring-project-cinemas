@@ -23,7 +23,6 @@ public class ShowtimesReadDTO {
     public static class Showtime {
         private UUID id;
         private String description;
-        private int numberOfTickets;
     }
     @Singular("showtime")
     private List<Showtime> showtimes;

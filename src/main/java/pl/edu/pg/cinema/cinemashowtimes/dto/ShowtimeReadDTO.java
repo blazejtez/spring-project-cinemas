@@ -16,6 +16,5 @@ public class ShowtimeReadDTO {
     private String movieTitle;
     private String showRoomName;
     private BigDecimal ticketPrice;
-    private int numberOfTickets;
     private LocalDateTime screeningTime;
 }

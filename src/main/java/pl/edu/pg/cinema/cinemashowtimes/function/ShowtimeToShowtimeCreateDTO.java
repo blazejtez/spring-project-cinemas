@@ -16,7 +16,6 @@ public class ShowtimeToShowtimeCreateDTO implements Function<Showtime, ShowtimeC
                 .movieTitle(entity.getMovieTitle())
                 .showRoomName(entity.getShowRoomName())
                 .ticketPrice(entity.getTicketPrice())
-                .numberOfTickets(entity.getNumberOfTickets())
                 .screeningTime(entity.getScreeningTime())
                 .build();
     }

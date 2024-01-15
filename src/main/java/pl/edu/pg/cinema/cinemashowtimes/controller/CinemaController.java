@@ -35,33 +35,47 @@ public class CinemaController {
         this.cinemaToCinemaCreateDTO = cinemaToCinemaCreateDTO;
     }
 
-
+    // logic: the requests is always correct, no reason to throw Exceptions.
+    //
     @GetMapping("api/cinemas")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     ResponseEntity<CinemasReadDTO> getCinemas()
     {
-        List<Cinema> cinemas = this.cinemaService.findAll();
-        CinemasReadDTO cinemasReadDTO = this.cinemasToCinemasReadDTO.apply(cinemas);
-        HttpHeaders headers = new HttpHeaders();
+        List<Cinema> cinemas = this.cinemaService.findAll(); //utilize services
+        CinemasReadDTO cinemasReadDTO = this.cinemasToCinemasReadDTO.apply(cinemas); // translate between business entities and DTO objects.
+        HttpHeaders headers = new HttpHeaders(); // headers for debugging purposes
         headers.add("Responded", "CinemaController");
         return ResponseEntity.accepted().headers(headers).body(cinemasReadDTO);
     }
 
-    @PostMapping("api/cinemas/api/cinemas")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @ResponseBody
+    @GetMapping("api/cinemas/{uuid}")
+    ResponseEntity<CinemaReadDTO> getCinema(@PathVariable UUID uuid)
+    {
+        try
+        {
+            Cinema cinema = this.cinemaService.findById(uuid);
+            CinemaReadDTO cinemaReadDTO = cinemaToCinemaReadDTO.apply(cinema);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Responded", "CinemaController");
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(cinemaReadDTO);
+        }
+        catch (EntityNotFoundException e) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Responded", "CinemaController");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
+        }
+
+    }
+
+    @PostMapping("api/cinemas")
     ResponseEntity<String> postCinema(@RequestBody CinemaCreateDTO cinemaCreateDTO)
     {
         this.cinemaService.create(cinemaCreateDTO);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Responded", "CinemasController");
+        headers.add("Responded", "CinemaController");
         return ResponseEntity.accepted().headers(headers).body("Successfully created");
     }
 
     @DeleteMapping("api/cinemas/{uuid}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     ResponseEntity<String> deleteCinema(@PathVariable UUID uuid)
     {
         try
@@ -81,26 +95,5 @@ public class CinemaController {
 
 
     }
-    @GetMapping("api/cinemas/{uuid}")
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    ResponseEntity<CinemaReadDTO> getCinema(@PathVariable UUID uuid)
-    {
-        try
-        {
-            Cinema cinema = this.cinemaService.findById(uuid);
-            CinemaReadDTO cinemaReadDTO = cinemaToCinemaReadDTO.apply(cinema);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Responded", "CinemaController");
-            return ResponseEntity.accepted().headers(headers).body(cinemaReadDTO);
-        }
-        catch (EntityNotFoundException e) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Responded", "CinemaController");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
-        }
-
-    }
-
 
 }
