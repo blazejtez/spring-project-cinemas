@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import pl.edu.pg.cinema.cinemashowtimes.dto.ShowtimesReadDTO;
 import pl.edu.pg.cinema.cinemashowtimes.entity.Showtime;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.function.Function;
 
@@ -16,8 +17,7 @@ public class ShowtimesToShowtimesReadDTO implements Function<List<Showtime>, Sho
                 .showtimes(entities.stream()
                         .map(showtime -> ShowtimesReadDTO.Showtime.builder()
                                 .id(showtime.getId())
-                                //TODO FIX IT
-                                .description(showtime.getMovieTitle() + " at " + showtime.getScreeningTime())
+                                .description("A movie titled \"" + showtime.getMovieTitle() + "\" screened at " + showtime.getScreeningTime().format(DateTimeFormatter.ofPattern("HH:mm"))+".")
                                 .build())
                         .toList())
                 .build();

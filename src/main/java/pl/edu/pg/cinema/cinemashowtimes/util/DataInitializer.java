@@ -4,11 +4,9 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.edu.pg.cinema.cinemashowtimes.dto.CinemaCreateDTO;
-import pl.edu.pg.cinema.cinemashowtimes.dto.ShowtimeCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.entity.Cinema;
 import pl.edu.pg.cinema.cinemashowtimes.entity.Showtime;
-import pl.edu.pg.cinema.cinemashowtimes.function.CinemaToCinemaCreateDTO;
+import pl.edu.pg.cinema.cinemashowtimes.function.ShowtimeCreateDTOToShowtime;
 import pl.edu.pg.cinema.cinemashowtimes.service.CinemaService;
 import pl.edu.pg.cinema.cinemashowtimes.service.ShowtimeService;
 
@@ -24,12 +22,12 @@ import java.util.Date;
 public class DataInitializer implements InitializingBean {
     private final ShowtimeService showtimeService;
     private final CinemaService cinemaService;
-    private final CinemaToCinemaCreateDTO cinemaToCinemaCreateDTO;
+    private final ShowtimeCreateDTOToShowtime showtimeCreateDTOToShowtime;
     @Autowired
-    public DataInitializer(ShowtimeService showtimeService, CinemaService cinemaService, CinemaToCinemaCreateDTO cinemaToCinemaCreateDTO) {
+    public DataInitializer(ShowtimeService showtimeService, CinemaService cinemaService, ShowtimeCreateDTOToShowtime showtimeCreateDTOToShowtime) {
         this.showtimeService = showtimeService;
         this.cinemaService = cinemaService;
-        this.cinemaToCinemaCreateDTO = cinemaToCinemaCreateDTO;
+        this.showtimeCreateDTOToShowtime = showtimeCreateDTOToShowtime;
     }
 
     @Override
@@ -54,6 +52,7 @@ public class DataInitializer implements InitializingBean {
                 .showRoomName("Big Hall")
                 .screeningTime(LocalDateTime.now())
                 .ticketPrice(new BigDecimal("19.99"))
+                .cinema(krewetka)
                 .build();
         showtimeService.create(showtime);
 

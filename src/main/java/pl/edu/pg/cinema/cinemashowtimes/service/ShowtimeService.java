@@ -27,18 +27,22 @@ public class ShowtimeService {
         return this.showtimeRepository.findAll();
     }
     public void delete(UUID uuid) {
-        Optional<Showtime> optionalDish = this.showtimeRepository.findById(uuid);
-        optionalDish.ifPresent(dish -> this.showtimeRepository.delete(dish));
+        Optional<Showtime> optionalShowtime = this.showtimeRepository.findById(uuid);
+        optionalShowtime.ifPresent(showtime -> this.showtimeRepository.delete(showtime));
     }
 
     public Showtime findById(UUID uuid) {
         Showtime showtime = this.showtimeRepository
                 .findById(uuid)
-                .orElseThrow(() -> new EntityNotFoundException("Dish not found with id: " + uuid));
+                .orElseThrow(() -> new EntityNotFoundException("Showtime not found with id: " + uuid));
         return showtime;
     }
 
     public void deleteById(UUID uuid) {
+        Showtime showtime = this.showtimeRepository
+                .findById(uuid)
+                .orElseThrow(() -> new EntityNotFoundException("Showtime not found with id: " + uuid));
+        this.showtimeRepository.deleteById(uuid);
     }
 
     public List<Showtime> findFromCinema(UUID cinemaUuid) {

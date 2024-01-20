@@ -14,11 +14,9 @@ public class CinemaService {
     private final CinemaRepository cinemaRepository;
 
     @Autowired
-    public CinemaService(CinemaRepository menuRepository) {
-        this.cinemaRepository = menuRepository;
+    public CinemaService(CinemaRepository cinemaRepository) {
+        this.cinemaRepository = cinemaRepository;
     }
-
-
 
     public void create(Cinema cinema) {
         cinemaRepository.save(cinema);

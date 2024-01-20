@@ -14,8 +14,7 @@ public class CinemasToCinemasReadDTO implements Function<List<Cinema>, CinemasRe
                 .cinemas(entities.stream()
                         .map( cinema -> CinemasReadDTO.Cinema.builder()
                                 .id(cinema.getId())
-                                //TODO FIX IT
-                                .description(cinema.getName() + " in " + cinema.getCity())
+                                .description("Famous " + cinema.getName() + " in " + cinema.getCity() + " at " + cinema.getStreet())
                                 .build())
                         .toList())
                 .build();
