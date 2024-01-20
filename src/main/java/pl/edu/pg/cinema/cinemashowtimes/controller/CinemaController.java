@@ -10,8 +10,8 @@ import pl.edu.pg.cinema.cinemashowtimes.dto.CinemaCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.dto.CinemaReadDTO;
 import pl.edu.pg.cinema.cinemashowtimes.dto.CinemasReadDTO;
 import pl.edu.pg.cinema.cinemashowtimes.entity.Cinema;
+import pl.edu.pg.cinema.cinemashowtimes.function.CinemaCreateDTOToCinema;
 import pl.edu.pg.cinema.cinemashowtimes.function.CinemaToCinemaReadDTO;
-import pl.edu.pg.cinema.cinemashowtimes.function.CinemaToCinemaCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.function.CinemasToCinemasReadDTO;
 import pl.edu.pg.cinema.cinemashowtimes.service.CinemaService;
 
@@ -22,21 +22,20 @@ public class CinemaController {
     private final CinemaService cinemaService;
     private final CinemasToCinemasReadDTO cinemasToCinemasReadDTO;
     private final CinemaToCinemaReadDTO cinemaToCinemaReadDTO;
-    private final CinemaToCinemaCreateDTO cinemaToCinemaCreateDTO;
+    private final CinemaCreateDTOToCinema cinemaCreateDTOToCinema;
 
     @Autowired
     public CinemaController(CinemaService cinemaService,
                             CinemasToCinemasReadDTO cinemasToCinemasReadDTO,
                             CinemaToCinemaReadDTO cinemaToCinemaReadDTO,
-                            CinemaToCinemaCreateDTO cinemaToCinemaCreateDTO) {
+                            CinemaCreateDTOToCinema cinemaCreateDTOToCinema) {
         this.cinemaService = cinemaService;
         this.cinemasToCinemasReadDTO = cinemasToCinemasReadDTO;
         this.cinemaToCinemaReadDTO = cinemaToCinemaReadDTO;
-        this.cinemaToCinemaCreateDTO = cinemaToCinemaCreateDTO;
+        this.cinemaCreateDTOToCinema = cinemaCreateDTOToCinema;
     }
 
     // logic: the requests is always correct, no reason to throw Exceptions.
-    //
     @GetMapping("api/cinemas")
     ResponseEntity<CinemasReadDTO> getCinemas()
     {
@@ -66,13 +65,26 @@ public class CinemaController {
 
     }
 
-    @PostMapping("api/cinemas")
-    ResponseEntity<String> postCinema(@RequestBody CinemaCreateDTO cinemaCreateDTO)
+    @PutMapping("api/cinemas/{uuid}")
+    ResponseEntity<String> putCinema(@PathVariable UUID uuid, @RequestBody CinemaCreateDTO cinemaCreateDTO)
     {
-        this.cinemaService.create(cinemaCreateDTO);
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Responded", "CinemaController");
-        return ResponseEntity.accepted().headers(headers).body("Successfully created");
+        try
+        {
+            Cinema cinema = this.cinemaService.findById(uuid);
+            this.cinemaService.create(this.cinemaCreateDTOToCinema.apply(uuid, cinemaCreateDTO));
+            String body = "Successfully updated.";
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Responded", "CinemaController");
+            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(body);
+        }
+        catch (EntityNotFoundException e) {
+            Cinema cinema = this.cinemaCreateDTOToCinema.apply(uuid, cinemaCreateDTO);
+            this.cinemaService.create(cinema);
+            String body = "Successfully created.";
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Responded", "CinemaController");
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(body);
+        }
     }
 
     @DeleteMapping("api/cinemas/{uuid}")
@@ -84,13 +96,13 @@ public class CinemaController {
             this.cinemaService.deleteById(uuid);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
-            return ResponseEntity.accepted().headers(headers).body("Succesfully deleted "+ uuid.toString());
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body("Succesfully deleted "+ uuid.toString());
         }
         catch (EntityNotFoundException e)
         {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Not Found", "CinemaController");
-            return ResponseEntity.notFound().headers(headers).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
         }
 
 

@@ -32,7 +32,6 @@ public class Cinema implements Comparable<Cinema>, Serializable {
     private int employeesNumber;
     @Column(name = "phone_number")
     private String phoneNumber;
-    private String description;
     @Column(name = "opening_date")
     private Date openingDate;
     @Singular
@@ -41,11 +40,6 @@ public class Cinema implements Comparable<Cinema>, Serializable {
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Showtime> showtimes;
-//
-//    @Override
-//    public String toString() {
-//        return name + street + city + zipCode;
-//    }
 
     @Override
     public int compareTo(Cinema o) {

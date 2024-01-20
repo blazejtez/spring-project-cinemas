@@ -20,19 +20,7 @@ public class ShowtimeService {
 
 
     public void create(Showtime showtime) {
-        if(id==null)
-        {
-            id = UUID.randomUUID();
-        }
-        Showtime showtimeEntity = Showtime
-                .builder()
-                .id(id)
-                .movieTitle(showtime.getMovieTitle())
-                .screeningTime(showtime.getScreeningTime())
-                .showRoomName(showtime.getShowRoomName())
-                .ticketPrice(showtime.getTicketPrice())
-                .build();
-        showtimeRepository.save(showtimeEntity);
+        showtimeRepository.save(showtime);
     }
 
     public List<Showtime> findAll() {

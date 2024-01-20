@@ -28,7 +28,6 @@ public class Showtime implements Comparable<Showtime>, Serializable {
     private BigDecimal ticketPrice;
     private int numberOfTickets;
     private LocalDateTime screeningTime;
-    private String description;
     @ManyToOne
     @JoinColumn(name = "cinema")
     private Cinema cinema;

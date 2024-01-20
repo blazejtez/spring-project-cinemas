@@ -22,7 +22,6 @@ public class CinemaService {
 
     public void create(Cinema cinema) {
         cinemaRepository.save(cinema);
-
     }
 
     public List<Cinema> findAll() {
@@ -32,10 +31,11 @@ public class CinemaService {
     public Cinema findById(UUID uuid) {
         return this.cinemaRepository
                 .findById(uuid)
-                .orElseThrow(() -> new EntityNotFoundException("Cinema not found with id: " + uuid));
+                .orElseThrow(() -> new EntityNotFoundException("Cinema with id: " + uuid + "not found"));
     }
 
     public void deleteById(UUID uuid) {
         this.cinemaRepository.deleteById(uuid);
     }
+
 }

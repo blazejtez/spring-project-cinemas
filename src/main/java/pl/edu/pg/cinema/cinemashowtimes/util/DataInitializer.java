@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import pl.edu.pg.cinema.cinemashowtimes.dto.CinemaCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.dto.ShowtimeCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.entity.Cinema;
+import pl.edu.pg.cinema.cinemashowtimes.entity.Showtime;
 import pl.edu.pg.cinema.cinemashowtimes.function.CinemaToCinemaCreateDTO;
 import pl.edu.pg.cinema.cinemashowtimes.service.CinemaService;
 import pl.edu.pg.cinema.cinemashowtimes.service.ShowtimeService;
@@ -33,7 +34,8 @@ public class DataInitializer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        CinemaCreateDTO krewetkaDTO = CinemaCreateDTO.builder()
+        Cinema krewetka = Cinema.builder()
+                .id(UUID.fromString("fe1ad570-dfeb-4c3f-be69-b594c0dd4fff"))
                 .name("Krewetka Cinema")
                 .street("Karmelicka 1")
                 .city("Gdansk")
@@ -42,19 +44,18 @@ public class DataInitializer implements InitializingBean {
                 .phoneNumber("555-1234")
                 .openingDate(new Date())
                 .build();
-        cinemaService.create(krewetkaDTO);
-
+        cinemaService.create(krewetka);
         List<Cinema> cinemas = cinemaService.findAll();
 
 
-        ShowtimeCreateDTO showtime = ShowtimeCreateDTO
-                .builder()
+        Showtime showtime = Showtime.builder()
+                .id(UUID.fromString("c60bb33b-cca3-4325-9a73-febc771e5c0e"))
                 .movieTitle("Dancing in the Dark")
                 .showRoomName("Big Hall")
                 .screeningTime(LocalDateTime.now())
                 .ticketPrice(new BigDecimal("19.99"))
                 .build();
-        showtimeService.create(showtime, null);
+        showtimeService.create(showtime);
 
     }
     @SneakyThrows
