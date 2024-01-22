@@ -23,25 +23,14 @@ public class CinemaController {
         this.cinemaCreateDTOToCinema = cinemaCreateDTOToCinema;
     }
     @PostMapping("api/cinemas/{uuid}")
-    ResponseEntity<String> putCinema(@PathVariable UUID uuid)
+    ResponseEntity<String> postCinema(@PathVariable UUID uuid)
     {
-        try
-        {
-            Cinema cinema = this.cinemaService.findById(uuid);
-            this.cinemaService.create(this.cinemaCreateDTOToCinema.apply(uuid));
-            String body = "Successfully updated.";
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Responded", "CinemaController");
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).headers(headers).body(body);
-        }
-        catch (EntityNotFoundException e) {
-            Cinema cinema = this.cinemaCreateDTOToCinema.apply(uuid);
-            this.cinemaService.create(cinema);
-            String body = "Successfully created.";
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Responded", "CinemaController");
-            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(body);
-        }
+        Cinema cinema = this.cinemaCreateDTOToCinema.apply(uuid);
+        this.cinemaService.create(cinema);
+        String body = "Successfully created.";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "CinemaController");
+        return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(body);
     }
 
     @DeleteMapping("api/cinemas/{uuid}")
