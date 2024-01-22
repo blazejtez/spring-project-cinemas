@@ -13,6 +13,7 @@ import pl.edu.pg.Showtimes.service.ShowtimeService;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import java.util.Date;
@@ -33,12 +34,9 @@ public class DataInitializer implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         Cinema krewetka = Cinema.builder()
-                .id(UUID.fromString("fe1ad570-dfeb-4c3f-be69-b594c0dd4fff"))
+                .id(UUID.fromString("1318ad0e-d021-4662-b962-6d419459cfc6"))
                 .build();
         cinemaService.create(krewetka);
-        List<Cinema> cinemas = cinemaService.findAll();
-
-
         Showtime showtime = Showtime.builder()
                 .id(UUID.fromString("c60bb33b-cca3-4325-9a73-febc771e5c0e"))
                 .movieTitle("Dancing in the Dark")
@@ -48,7 +46,8 @@ public class DataInitializer implements InitializingBean {
                 .cinema(krewetka)
                 .build();
         showtimeService.create(showtime);
-
+        List<Showtime> showtimes = showtimeService.findAll();
+        krewetka.setShowtimes(showtimes);
     }
     @SneakyThrows
     private byte[] getResourceAsByteArray(String name) {

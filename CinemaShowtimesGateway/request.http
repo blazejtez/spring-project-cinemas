@@ -70,7 +70,11 @@ DELETE http://localhost:8085/api/showtimes/c60bb33b-cca3-4325-9a73-febc771e5c0e
 GET http://localhost:8085/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff/showtimes
 
 ### Get showtimes from existing cinema without showtimes
-GET http://localhost:8085/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff/showtimes
+#TODO BŁĘDNE DZIAŁANIE
+GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes
 
 ### Get showtimes from non existing cinema
 GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc7/showtimes
+
+### Get cinema showtimes
+GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes

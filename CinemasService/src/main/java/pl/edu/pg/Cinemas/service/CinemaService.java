@@ -23,7 +23,7 @@ public class CinemaService {
 
     public void create(Cinema cinema) {
         cinemaRepository.save(cinema);
-        eventRepository.create(cinema.getId());
+        eventRepository.create(cinema);
     }
 
     public List<Cinema> findAll() {

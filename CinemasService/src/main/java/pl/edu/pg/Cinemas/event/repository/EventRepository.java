@@ -22,9 +22,10 @@ public class EventRepository {
     public void delete(UUID uuid) {
         restTemplate.delete("/api/cinemas/{uuid}");
     }
-    public void create(UUID uuid) {
+    public void create(Cinema cinema) {
+        String uuid = cinema.getId().toString();
         CinemaCreateDTO cinemaCreateDTO = new CinemaCreateDTO();
-        restTemplate.postForLocation("/api/cinemas/{uuid}", cinemaCreateDTO);
+        restTemplate.postForLocation("/api/cinemas/"+uuid, cinemaCreateDTO);
     }
 
 }
