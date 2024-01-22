@@ -18,6 +18,7 @@ import pl.edu.pg.Cinemas.service.CinemaService;
 import java.util.List;
 import java.util.UUID;
 @RestController
+@RequestMapping("api/cinemas")
 public class CinemaController {
     private final CinemaService cinemaService;
     private final CinemasToCinemasReadDTO cinemasToCinemasReadDTO;
@@ -36,17 +37,16 @@ public class CinemaController {
     }
 
     // logic: the requests is always correct, no reason to throw Exceptions.
-    @GetMapping("api/cinemas")
+    @GetMapping
     ResponseEntity<CinemasReadDTO> getCinemas()
     {
         List<Cinema> cinemas = this.cinemaService.findAll(); //utilize services
         CinemasReadDTO cinemasReadDTO = this.cinemasToCinemasReadDTO.apply(cinemas); // translate between business entities and DTO objects.
-        HttpHeaders headers = new HttpHeaders(); // headers for debugging purposes
-        headers.add("Responded", "CinemaController");
-        return ResponseEntity.accepted().headers(headers).body(cinemasReadDTO);
+        HttpHeaders headers = new HttpHeaders();
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(cinemasReadDTO);
     }
 
-    @GetMapping("api/cinemas/{uuid}")
+    @GetMapping("{uuid}")
     ResponseEntity<CinemaReadDTO> getCinema(@PathVariable UUID uuid)
     {
         try
@@ -65,7 +65,7 @@ public class CinemaController {
 
     }
 
-    @PutMapping("api/cinemas/{uuid}")
+    @PutMapping("{uuid}")
     ResponseEntity<String> putCinema(@PathVariable UUID uuid, @RequestBody CinemaCreateDTO cinemaCreateDTO)
     {
         try
@@ -87,7 +87,7 @@ public class CinemaController {
         }
     }
 
-    @DeleteMapping("api/cinemas/{uuid}")
+    @DeleteMapping("{uuid}")
     ResponseEntity<String> deleteCinema(@PathVariable UUID uuid)
     {
         try

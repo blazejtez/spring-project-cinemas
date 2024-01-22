@@ -18,6 +18,7 @@ DELETE http://localhost:8082/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5
 #### Get showtimes for a cinema
 GET http://localhost:8082/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff/showtimes
 
+####TODO THIS IS BROKEN AND NEED TO BE FIXED
 #### Delete cinema with cascade showtimes
 DELETE http://localhost:8082/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="CinemaShowtimeGateway" />
+        <module name="Cinemas" />
+        <module name="Showtimes" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="CinemaShowtimesGateway" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CinemaShowtimeGateway" options="-parameters" />
+      <module name="CinemaShowtimesGateway" options="-parameters" />
+      <module name="Cinemas" options="-parameters" />
+      <module name="Showtimes" options="-parameters" />
+    </option>
+  </component>
+</project>

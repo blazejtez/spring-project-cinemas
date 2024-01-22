@@ -1,7 +1,14 @@
 package pl.edu.pg.CinemaShowtimesGateway;
 
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 public class CinemaShowtimesGatewayApplication {
@@ -9,49 +16,79 @@ public class CinemaShowtimesGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CinemaShowtimesGatewayApplication.class, args);
 	}
-
 	@Bean
 	public RouteLocator routeLocator(
 			RouteLocatorBuilder builder,
-			@Value("${rpg.character.url}") String characterUrl,
-			@Value("${rpg.profession.url}") String professionUrl,
-			@Value("${rpg.user.url}") String userUrl,
-			@Value("${rpg.gatewy.host}") String host
+			@Value("${isa.cinema.url}") String cinemaUrl,
+			@Value("${isa.showtime.url}") String showtimeUrl,
+			@Value("${isa.gateway.host}") String host
 	) {
 		return builder
 				.routes()
-				.route("users", route -> route
+				.route("cinemas", route -> route
 						.host(host)
 						.and()
 						.path(
-								"/api/users/{uuid}",
-								"/api/users"
+								"/api/cinemas/{uuid}",
+								"/api/cinemas"
 						)
-						.uri(userUrl)
+						.uri(cinemaUrl)
 				)
-				.route("professions", route -> route
+				.route("showtimes", route -> route
 						.host(host)
 						.and()
 						.path(
-								"/api/professions/{uuid}",
-								"/api/professions"
+								"/api/showtimes",
+								"/api/showtimes/**",
+								"/api/cinemas/{uuid}/showtimes",
+								"/api/cinemas/{uuid}/showtimes/**"
 						)
-						.uri(professionUrl)
-				)
-				.route("characters", route -> route
-						.host(host)
-						.and()
-						.path(
-								"/api/characters",
-								"/api/characters/**",
-								"/api/users/{uuid}/characters",
-								"/api/users/{uuid}/characters/**",
-								"/api/professions/{uuid}/characters",
-								"/api/professions/{uuid}/characters/**"
-						)
-						.uri(characterUrl)
+						.uri(showtimeUrl)
 				)
 				.build();
 	}
-
+//	@Bean
+//	public RouteLocator routeLocator(
+//			RouteLocatorBuilder builder,
+//			@Value("${isa.cinema.url}") String cinemaUrl,
+//			@Value("${isa.showtime.url}") String showtimeUrl,
+//			@Value("${isa.gateway.host}") String host
+//	) {
+//		return builder
+//				.routes()
+//				.route("cinemas", route -> route
+//						.host(host)
+//						.and()
+//						.path(
+//								"/api/cinemas/**",
+//								"/api/cinemas"
+//						)
+//						.uri(cinemaUrl)
+//				)
+//				.route("showtimes", route -> route
+//						.host(host)
+//						.and()
+//						.path(
+//								"/api/showtimes",
+//								"/api/showtimes/**"
+//						)
+//						.uri(showtimeUrl)
+//				)
+//				.build();
+//	}
+//	@Component
+//	public class Debugger {
+//		private final RouteLocator routeLocator;
+//
+//		@Autowired
+//		public Debugger(RouteLocator routeLocator) {
+//			this.routeLocator = routeLocator;
+//		}
+//
+//		@PostConstruct
+//		public void debug() {
+//			this.routeLocator.getRoutes();
+//		}
+//
+//	}
 }

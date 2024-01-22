@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pg.Showtimes.dto.ShowtimeCreateDTO;
+import pl.edu.pg.Showtimes.dto.ShowtimeReadDTO;
 import pl.edu.pg.Showtimes.dto.ShowtimesReadDTO;
 import pl.edu.pg.Showtimes.entity.Showtime;
 import pl.edu.pg.Showtimes.function.ShowtimeCreateDTOToShowtime;
@@ -56,6 +57,34 @@ public class CinemaShowtimeController {
         return ResponseEntity.accepted().headers(headers).body(showtimesReadDTO);
     }
 
+    @GetMapping("{showtimeUuid}")
+    ResponseEntity<ShowtimeReadDTO> getShowtime(@RequestParam UUID cinemaUuid, @RequestParam UUID showtimeUuid)
+    {
+        try {
+            this.cinemaService.findById(cinemaUuid);
+        }
+        catch (EntityNotFoundException e)
+        {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Responded", "CinemaShowtimeController");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
+        }
+        try
+        {
+            Showtime showtime = this.showtimeService.findById(showtimeUuid);
+            ShowtimeReadDTO showtimeReadDTO = this.showtimeToShowtimeReadDTO.apply(showtime);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Responded", "CinemaShowtimeController");
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(showtimeReadDTO);
+        }
+        catch (EntityNotFoundException e)
+        {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Responded", "CinemaShowtimeController");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
+        }
+
+    }
 
     @PutMapping("{showtimeUuid}")
     ResponseEntity<String> postShowtime(@RequestBody ShowtimeCreateDTO showtimeCreateDTO, @RequestParam UUID cinemaUuid,

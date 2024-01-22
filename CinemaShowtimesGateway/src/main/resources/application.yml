@@ -1,0 +1,16 @@
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.http.server.reactive: DEBUG
+    reactor.netty: DEBUG
+
+#spring:
+#  cloud:
+#    gateway:
+#      httpclient:
+#        wiretap: true
+#      routes:
+#        - id: cinemas
+#          uri: http://localhost:8081/
+#          predicates:
+#            - Path=api/cinemas/{uuid},/api/cinemas
