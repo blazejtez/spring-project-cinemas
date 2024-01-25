@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  showtimes:
+    image: showtimes:0.0.1-SNAPSHOT
+    restart: always
+
+  cinemas:
+    image: cinemas:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      ISA_SHOWTIME_URL: "http://showtimes:8080"
+
+  cinema-showtime-gateway:
+    image: cinema-showtime-gateway:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      ISA_CINEMA_URL: "http://cinemas:8080"
+      ISA_SHOWTIME_URL: "http://showtimes:8080"
+    ports:
+      - "8085:8085"

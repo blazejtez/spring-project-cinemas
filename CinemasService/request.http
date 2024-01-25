@@ -2,7 +2,7 @@
 
 #### Get all cinemas
 ## always works - returns empty list of no cinemas present
-GET http://localhost:8081/api/cinemas
+GET http://localhost:8085/api/cinemas
 
 #### Get single existing cinema
 ## should return an existing cinema
