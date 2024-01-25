@@ -9,10 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import pl.edu.pg.Showtimes.dto.CinemasReadDTO;
 import pl.edu.pg.Showtimes.entity.Cinema;
 import pl.edu.pg.Showtimes.function.CinemaCreateDTOToCinema;
+import pl.edu.pg.Showtimes.function.CinemasToCinemasReadDTO;
 import pl.edu.pg.Showtimes.service.CinemaService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -21,10 +24,13 @@ public class CinemaController {
 	private final CinemaService cinemaService;
 	private final CinemaCreateDTOToCinema cinemaCreateDTOToCinema;
 
+	private final CinemasToCinemasReadDTO cinemasToCinemasReadDTO;
+
 	@Autowired
-	public CinemaController(CinemaService cinemaService, CinemaCreateDTOToCinema cinemaCreateDTOToCinema) {
+	public CinemaController(CinemaService cinemaService, CinemaCreateDTOToCinema cinemaCreateDTOToCinema, CinemasToCinemasReadDTO cinemasToCinemasReadDTO) {
 		this.cinemaService = cinemaService;
 		this.cinemaCreateDTOToCinema = cinemaCreateDTOToCinema;
+		this.cinemasToCinemasReadDTO = cinemasToCinemasReadDTO;
 	}
 
 	@PostMapping("api/cinemas/{uuid}")
@@ -52,6 +58,15 @@ public class CinemaController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
 		}
 
+	}
+
+	@GetMapping("api/showtimes/cinemas")
+	ResponseEntity<CinemasReadDTO> showAllCinemas() {
+		List<Cinema> cinemas = cinemaService.findAll();
+		CinemasReadDTO cinemasReadDTO = cinemasToCinemasReadDTO.apply(cinemas); // translate between business entities and DTO objects.
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Responded", "CinemaController");
+		return ResponseEntity.status(HttpStatus.OK).headers(headers).body(cinemasReadDTO);
 	}
 
 }

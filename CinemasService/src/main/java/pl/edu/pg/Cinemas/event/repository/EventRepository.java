@@ -21,7 +21,8 @@ public class EventRepository {
 	}
 
 	public void delete(UUID uuid) {
-		restTemplate.delete("/api/cinemas/{uuid}");
+		String uuidASString = uuid.toString();
+		restTemplate.delete("/api/cinemas/" + uuidASString);
 	}
 
 	public void create(Cinema cinema) {

@@ -22,6 +22,7 @@ public class Cinema implements Comparable<Cinema>, Serializable {
 
     @Id
     private UUID id;
+
     @OneToMany(mappedBy = "cinema", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
