@@ -1,80 +1,97 @@
-# Cinemas Endpoints
-#### Get all cinemas
-## always works - returns empty list of no cinemas present
+
+### Get cinemas # Baza nie zawiera seansów
+GET http://localhost:8085/api/showtimes
+
+
+### Get cinemas # nie ma kin
 GET http://localhost:8085/api/cinemas
 
-#### Get single existing cinema
-## should return an existing cinema
-GET http://localhost:8085/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff
+### Get cinema showtimes # pobranie z kina które nie istnieje daje 404
+GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes
 
-#### Get single non existing cinema
-## should return error 404 and information that cinema does not exist
-GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
 
-### Create a new cinema
-## should inform that it was successful 201 Created
-## if there was already a cinema 200 OK
+### Put cinema # wprowadzam pierwsze kino
 PUT http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
 Content-Type: application/json
 
 {
-  "name": "Cinema Name",
-  "street": "Cinema Street",
-  "city": "Cinema City",
-  "zipCode": "12345",
+  "name": "Krewetka",
+  "street": "Karmelicka 1",
+  "city": "Gdansk",
+  "zipCode": "80-200",
   "employeesNumber": 10,
   "phoneNumber": "123-456-7890",
   "openingDate": "2023-01-01"
 }
 
 
+### Put another cinema # wprowadzam drugie kino
+PUT http://localhost:8085/api/cinemas/9d73f7ed-ac6c-4d3d-a6b1-2d262161aecd
+Content-Type: application/json
+
+{
+  "name": "Helios",
+  "street": "Wajdeloty",
+  "city": "Gdansk",
+  "zipCode": "80-205",
+  "employeesNumber": 20,
+  "phoneNumber": "333-456-7890",
+  "openingDate": "2023-01-02"
+}
+
+### Get cinema showtimes # pobranie listy seansow z pustego kina daje pusta liste
+GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes
+
+### Put showtime to cinema1
+PUT http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes/1779c893-18b9-4034-a70c-90ffdcff08ae
+Content-Type: application/json
+
+{
+  "movieTitle": "Godzilla",
+  "showRoomName": "Big Hall",
+  "ticketPrice": 19.99,
+  "numberOfTickets": 100,
+  "screeningTime": "2019-02-05T22:08:28.097832"
+}
+
+### Put showtime 2 to cinema1
+PUT http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes/47fb6884-d518-4986-924a-83e23f4bb3df
+Content-Type: application/json
+
+{
+  "movieTitle": "Alien",
+  "showRoomName": "Small Hall",
+  "ticketPrice": 9.99,
+  "numberOfTickets": 50,
+  "screeningTime": "2019-01-03T22:08:28.097832"
+}
+
+
+### Put showtime 3 to cinema2
+PUT http://localhost:8085/api/cinemas/9d73f7ed-ac6c-4d3d-a6b1-2d262161aecd/showtimes/f3c10d6f-c254-48a3-b402-48391e343ea3
+Content-Type: application/json
+
+{
+  "movieTitle": "Predator",
+  "showRoomName": "Big Hall",
+  "ticketPrice": 99.99,
+  "numberOfTickets": 20,
+  "screeningTime": "2023-12-03T22:08:28.097832"
+}
+
+### Get cinema showtimes # pobranie listy seansow z kina1 zwraca liste seansow
+GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes
+
+### Get cinema showtimes # pobranie listy seansow z kina2 zwraca liste seansow
+GET http://localhost:8085/api/cinemas/9d73f7ed-ac6c-4d3d-a6b1-2d262161aecd/showtimes
+
+### Get cinema showtimes # sprawdzenie listy seansow
+GET http://localhost:8085/api/showtimes
+
 ### Delete a cinema existing
 ## 200 if exists
 ## 404 if there is none
 DELETE http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
 
-### Delete a cinema non existing
-## 200 if exists
-## 404 if there is none
-DELETE http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5
-
-# Showtimes Endpoints
-#### Get showtimes for a cinema
-GET http://localhost:8085/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff/showtimes
-
-#### Delete cinema with cascade showtimes
-DELETE http://localhost:8085/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff
-
-#### Get existing showtime
-GET http://localhost:8085/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff/showtimes
-
-#### Get showtimes for a non existing cinema
-GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5/showtimes
-
-### Get all showtimes
+### Get cinema showtimes # sprawdzenie efektu kaskadowego
 GET http://localhost:8085/api/showtimes
-
-### Get single showtime (showtime exists)
-GET http://localhost:8085/api/showtimes/c60bb33b-cca3-4325-9a73-febc771e5c0e
-
-### Get single showtime (showtime does not exist)
-GET http://localhost:8085/api/showtimes/b5d6e3db-aa5c-4724-8409-3c42a914dc98
-
-### Delete a non existing showtime
-DELETE http://localhost:8085/api/showtimes/b5d6e3db-aa5c-4724-8409-3c42a914dc98
-
-### Delete an existing showtime
-DELETE http://localhost:8085/api/showtimes/c60bb33b-cca3-4325-9a73-febc771e5c0e
-
-### Get existing showtimes from one cinema
-GET http://localhost:8085/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff/showtimes
-
-### Get showtimes from existing cinema without showtimes
-#TODO BŁĘDNE DZIAŁANIE
-GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes
-
-### Get showtimes from non existing cinema
-GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc7/showtimes
-
-### Get cinema showtimes
-GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes
