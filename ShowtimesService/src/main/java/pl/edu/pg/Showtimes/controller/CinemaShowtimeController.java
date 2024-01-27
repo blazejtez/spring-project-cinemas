@@ -58,7 +58,7 @@ public class CinemaShowtimeController {
     }
 
     @GetMapping("{showtimeUuid}")
-    ResponseEntity<ShowtimeReadDTO> getShowtime(@RequestParam UUID cinemaUuid, @RequestParam UUID showtimeUuid)
+    ResponseEntity<ShowtimeReadDTO> getShowtime(@PathVariable UUID cinemaUuid, @PathVariable UUID showtimeUuid)
     {
         try {
             this.cinemaService.findById(cinemaUuid);
@@ -87,8 +87,8 @@ public class CinemaShowtimeController {
     }
 
     @PutMapping("{showtimeUuid}")
-    ResponseEntity<String> postShowtime(@RequestBody ShowtimeCreateDTO showtimeCreateDTO, @RequestParam UUID cinemaUuid,
-                                        @RequestParam UUID showtimeUuid)
+    ResponseEntity<String> postShowtime(@RequestBody ShowtimeCreateDTO showtimeCreateDTO, @PathVariable UUID cinemaUuid,
+                                        @PathVariable UUID showtimeUuid)
     {
         try
         {

@@ -17,6 +17,7 @@ import pl.edu.pg.Cinemas.service.CinemaService;
 
 import java.util.List;
 import java.util.UUID;
+
 @RestController
 @RequestMapping("api/cinemas")
 public class CinemaController {

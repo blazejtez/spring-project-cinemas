@@ -48,3 +48,16 @@ GET http://localhost:8082/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showt
 
 ### Get showtimes from non existing cinema
 GET http://localhost:8082/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc7/showtimes
+
+### Put showtime from non existing cinema
+PUT http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6/showtimes/c60bb33b-cca3-4325-9a73-febc771e5c0e
+Content-Type: application/json
+
+{
+  "movieTitle": "Cinema Name",
+  "showRoomName": "Cinema Street",
+  "ticketPrice": "10.99",
+  "numberOfTickets":  10,
+  "screeningTime": null
+}
+### ^^^^^^^^^^^^^^^^^ napraw nulla mordo

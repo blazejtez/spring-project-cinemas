@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +21,7 @@ public class Cinema implements Comparable<Cinema>, Serializable {
 
     @Id
     private UUID id;
+
     @OneToMany(mappedBy = "cinema", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

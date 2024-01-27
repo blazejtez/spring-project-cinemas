@@ -12,20 +12,22 @@ import java.util.UUID;
 
 @Repository
 public class EventRepository {
-    private final RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
 
-    @Autowired
-    public EventRepository(@Value("${isa.showtime.url}") String baseUrl)
-    {
-        restTemplate = new RestTemplateBuilder().rootUri(baseUrl).build();
-    }
-    public void delete(UUID uuid) {
-        restTemplate.delete("/api/cinemas/{uuid}");
-    }
-    public void create(Cinema cinema) {
-        String uuid = cinema.getId().toString();
-        CinemaCreateDTO cinemaCreateDTO = new CinemaCreateDTO();
-        restTemplate.postForLocation("/api/cinemas/"+uuid, cinemaCreateDTO);
-    }
+	@Autowired
+	public EventRepository(@Value("${isa.showtime.url}") String baseUrl) {
+		restTemplate = new RestTemplateBuilder().rootUri(baseUrl).build();
+	}
+
+	public void delete(UUID uuid) {
+		String uuidASString = uuid.toString();
+		restTemplate.delete("/api/cinemas/" + uuidASString);
+	}
+
+	public void create(Cinema cinema) {
+		String uuid = cinema.getId().toString();
+		CinemaCreateDTO cinemaCreateDTO = new CinemaCreateDTO();
+		restTemplate.postForLocation("/api/cinemas/" + uuid, cinemaCreateDTO);
+	}
 
 }
