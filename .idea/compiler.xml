@@ -7,9 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Showtimes" />
+        <module name="CinemaShowtimeDiscovery" />
         <module name="CinemaShowtimeGateway" />
         <module name="Cinemas" />
-        <module name="Showtimes" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -18,6 +19,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CinemaShowtimeDiscovery" options="-parameters" />
       <module name="CinemaShowtimeGateway" options="-parameters" />
       <module name="CinemaShowtimesGateway" options="-parameters" />
       <module name="Cinemas" options="-parameters" />

@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/ShowtimesService/pom.xml" />
         <option value="$PROJECT_DIR$/CinemasService/pom.xml" />
         <option value="$PROJECT_DIR$/CinemaShowtimesGateway/pom.xml" />
+        <option value="$PROJECT_DIR$/CinemaShowtimeDiscovery/pom.xml" />
       </list>
     </option>
   </component>
