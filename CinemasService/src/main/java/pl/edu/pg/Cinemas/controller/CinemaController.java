@@ -1,7 +1,9 @@
 package pl.edu.pg.Cinemas.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import pl.edu.pg.Cinemas.service.CinemaService;
 
 import java.util.List;
 import java.util.UUID;
+
+@Slf4j
 @RestController
 @RequestMapping("api/cinemas")
 public class CinemaController {
@@ -24,40 +28,47 @@ public class CinemaController {
     private final CinemasToCinemasReadDTO cinemasToCinemasReadDTO;
     private final CinemaToCinemaReadDTO cinemaToCinemaReadDTO;
     private final CinemaCreateDTOToCinema cinemaCreateDTOToCinema;
+    private final DiscoveryClient discoveryClient;
+
 
     @Autowired
     public CinemaController(CinemaService cinemaService,
                             CinemasToCinemasReadDTO cinemasToCinemasReadDTO,
                             CinemaToCinemaReadDTO cinemaToCinemaReadDTO,
-                            CinemaCreateDTOToCinema cinemaCreateDTOToCinema) {
+                            CinemaCreateDTOToCinema cinemaCreateDTOToCinema, DiscoveryClient discoveryClient) {
         this.cinemaService = cinemaService;
         this.cinemasToCinemasReadDTO = cinemasToCinemasReadDTO;
         this.cinemaToCinemaReadDTO = cinemaToCinemaReadDTO;
         this.cinemaCreateDTOToCinema = cinemaCreateDTOToCinema;
+        this.discoveryClient = discoveryClient;
     }
 
     // logic: the requests is always correct, no reason to throw Exceptions.
     @GetMapping
-    ResponseEntity<CinemasReadDTO> getCinemas()
-    {
+    ResponseEntity<CinemasReadDTO> getCinemas() {
+        log.info("Get all cinemas");
         List<Cinema> cinemas = this.cinemaService.findAll(); //utilize services
         CinemasReadDTO cinemasReadDTO = this.cinemasToCinemasReadDTO.apply(cinemas); // translate between business entities and DTO objects.
         HttpHeaders headers = new HttpHeaders();
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(cinemasReadDTO);
     }
 
+    @GetMapping("/eureka")
+    List<String> printAll() {
+        List<String> services = discoveryClient.getServices();
+        services.forEach(System.out::println);
+        return services;
+    }
+
     @GetMapping("{uuid}")
-    ResponseEntity<CinemaReadDTO> getCinema(@PathVariable UUID uuid)
-    {
-        try
-        {
+    ResponseEntity<CinemaReadDTO> getCinema(@PathVariable UUID uuid) {
+        try {
             Cinema cinema = this.cinemaService.findById(uuid);
             CinemaReadDTO cinemaReadDTO = cinemaToCinemaReadDTO.apply(cinema);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
             return ResponseEntity.status(HttpStatus.OK).headers(headers).body(cinemaReadDTO);
-        }
-        catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
@@ -66,18 +77,15 @@ public class CinemaController {
     }
 
     @PutMapping("{uuid}")
-    ResponseEntity<String> putCinema(@PathVariable UUID uuid, @RequestBody CinemaCreateDTO cinemaCreateDTO)
-    {
-        try
-        {
+    ResponseEntity<String> putCinema(@PathVariable UUID uuid, @RequestBody CinemaCreateDTO cinemaCreateDTO) {
+        try {
             Cinema cinema = this.cinemaService.findById(uuid);
             this.cinemaService.create(this.cinemaCreateDTOToCinema.apply(uuid, cinemaCreateDTO));
             String body = "Successfully updated.";
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
             return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(body);
-        }
-        catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             Cinema cinema = this.cinemaCreateDTOToCinema.apply(uuid, cinemaCreateDTO);
             this.cinemaService.create(cinema);
             String body = "Successfully created.";
@@ -88,18 +96,14 @@ public class CinemaController {
     }
 
     @DeleteMapping("{uuid}")
-    ResponseEntity<String> deleteCinema(@PathVariable UUID uuid)
-    {
-        try
-        {
+    ResponseEntity<String> deleteCinema(@PathVariable UUID uuid) {
+        try {
             Cinema cinema = this.cinemaService.findById(uuid);
             this.cinemaService.deleteById(uuid);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
-            return ResponseEntity.status(HttpStatus.OK).headers(headers).body("Succesfully deleted "+ uuid.toString());
-        }
-        catch (EntityNotFoundException e)
-        {
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).body("Succesfully deleted " + uuid.toString());
+        } catch (EntityNotFoundException e) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Not Found", "CinemaController");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();

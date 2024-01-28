@@ -1,6 +1,7 @@
 package pl.edu.pg.Showtimes.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import pl.edu.pg.Showtimes.service.ShowtimeService;
 
 import java.util.List;
 import java.util.UUID;
+
+@Slf4j
 @RestController
 public class ShowtimeController {
     private final ShowtimeService showtimeService;
@@ -33,6 +36,7 @@ public class ShowtimeController {
     @GetMapping("api/showtimes")
     ResponseEntity<ShowtimesReadDTO> getShowtimes()
     {
+        log.info("Get all showtimes");
         List<Showtime> showtimes = this.showtimeService.findAll();
         ShowtimesReadDTO showtimesReadDTO = this.showtimesToShowtimesReadDTO.apply(showtimes);
         HttpHeaders headers = new HttpHeaders();

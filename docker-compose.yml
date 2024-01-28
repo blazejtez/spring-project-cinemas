@@ -12,6 +12,8 @@ services:
   showtime_db:
     container_name: "showtimes-db"
     image: postgres
+    volumes:
+      - /c/postgres/showtimes:/var/lib/postgresql/data
     ports:
       - "5439:5432"
     environment:
@@ -22,6 +24,9 @@ services:
   showtimes:
     image: showtimes:0.0.1-SNAPSHOT
     restart: always
+    deploy:
+      mode: replicated
+      replicas: 2
     environment:
       SPRING_DATASOURCE_USERNAME: "admin"
       SPRING_DATASOURCE_PASSWORD: "admin"
@@ -32,6 +37,8 @@ services:
   cinema_db:
     container_name: "cinemas-db"
     image: postgres
+    volumes:
+      - /c/postgres/cinemas:/var/lib/postgresql/data
     ports:
       - "5438:5432"
     environment:
@@ -42,8 +49,11 @@ services:
   cinemas:
     image: cinemas:0.0.1-SNAPSHOT
     restart: always
+    deploy:
+      mode: replicated
+      replicas: 2
     environment:
-      ISA_SHOWTIME_URL: "lb://SHOWTIMESSERVICE"
+      ISA_SHOWTIME_URL: "http://showtimesservice"
       SPRING_DATASOURCE_USERNAME: "admin"
       SPRING_DATASOURCE_PASSWORD: "admin"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://cinema_db:5432/cinemas"

@@ -2,7 +2,6 @@ package pl.edu.pg.Cinemas.event.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,22 +12,27 @@ import java.util.UUID;
 
 @Repository
 public class EventRepository {
-	private final RestTemplate restTemplate;
 
-	@Autowired
-	public EventRepository(@Value("${isa.showtime.url}") String baseUrl) {
-		restTemplate = new RestTemplateBuilder().rootUri(baseUrl).build();
-	}
 
-	public void delete(UUID uuid) {
-		String uuidASString = uuid.toString();
-		restTemplate.delete("/api/cinemas/" + uuidASString);
-	}
+    private final RestTemplate restTemplate;
 
-	public void create(Cinema cinema) {
-		String uuid = cinema.getId().toString();
-		CinemaCreateDTO cinemaCreateDTO = new CinemaCreateDTO();
-		restTemplate.postForLocation("/api/cinemas/" + uuid, cinemaCreateDTO);
-	}
+    @Value("${isa.showtime.url}")
+    private String baseUrl;
+
+    @Autowired
+    public EventRepository(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public void delete(UUID uuid) {
+        String uuidASString = uuid.toString();
+        restTemplate.delete(baseUrl + "/api/cinemas/" + uuidASString);
+    }
+
+    public void create(Cinema cinema) {
+        String uuid = cinema.getId().toString();
+        CinemaCreateDTO cinemaCreateDTO = new CinemaCreateDTO();
+        restTemplate.postForLocation(baseUrl + "/api/cinemas/" + uuid, cinemaCreateDTO);
+    }
 
 }
