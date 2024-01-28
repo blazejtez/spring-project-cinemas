@@ -10,7 +10,7 @@
 #   None.
 #######################################
 function main() {
-    JAVA_HOME="C:\\Users\\mblaszkowski\\.jdks\\openjdk-21.0.2"  "C:\\env\\apache-maven-3.9.6\\bin\\mvn"  clean verify
+    JAVA_HOME="C:\\jdk17"  "C:\\env\\apache-maven-3.9.6\\bin\\mvn"  clean verify
     title="$(grep -n "org.opencontainers.image.title" Dockerfile | cut -f2 -d "=" | xargs)"
     version="$(grep -n "org.opencontainers.image.version" Dockerfile | cut -f2 -d "=" | xargs)"
     docker build \

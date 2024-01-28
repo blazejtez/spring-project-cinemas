@@ -33,21 +33,21 @@ public class DataInitializer implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Cinema krewetka = Cinema.builder()
-                .id(UUID.fromString("1318ad0e-d021-4662-b962-6d419459cfc6"))
-                .build();
-        cinemaService.create(krewetka);
-        Showtime showtime = Showtime.builder()
-                .id(UUID.fromString("c60bb33b-cca3-4325-9a73-febc771e5c0e"))
-                .movieTitle("Dancing in the Dark")
-                .showRoomName("Big Hall")
-                .screeningTime(LocalDateTime.now())
-                .ticketPrice(new BigDecimal("19.99"))
-                .cinema(krewetka)
-                .build();
-        showtimeService.create(showtime);
-        List<Showtime> showtimes = showtimeService.findAll();
-        krewetka.setShowtimes(showtimes);
+//        Cinema krewetka = Cinema.builder()
+//                .id(UUID.fromString("1318ad0e-d021-4662-b962-6d419459cfc6"))
+//                .build();
+//        cinemaService.create(krewetka);
+//        Showtime showtime = Showtime.builder()
+//                .id(UUID.fromString("c60bb33b-cca3-4325-9a73-febc771e5c0e"))
+//                .movieTitle("Dancing in the Dark")
+//                .showRoomName("Big Hall")
+//                .screeningTime(LocalDateTime.now())
+//                .ticketPrice(new BigDecimal("19.99"))
+//                .cinema(krewetka)
+//                .build();
+//        showtimeService.create(showtime);
+//        List<Showtime> showtimes = showtimeService.findAll();
+//        krewetka.setShowtimes(showtimes);
     }
     @SneakyThrows
     private byte[] getResourceAsByteArray(String name) {

@@ -1,15 +1,44 @@
 version: '3'
 
 services:
+  showtime_db:
+    container_name: "showtimes-db"
+    image: postgres
+    ports:
+      - "5439:5432"
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "showtimes"
+      POSTGRES_PASSWORD: "admin"
+
   showtimes:
     image: showtimes:0.0.1-SNAPSHOT
     restart: always
+    environment:
+      SPRING_DATASOURCE_USERNAME: "admin"
+      SPRING_DATASOURCE_PASSWORD: "admin"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://showtime_db:5432/showtimes"
+      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
+
+  cinema_db:
+    container_name: "cinemas-db"
+    image: postgres
+    ports:
+      - "5438:5432"
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "cinemas"
+      POSTGRES_PASSWORD: "admin"
 
   cinemas:
     image: cinemas:0.0.1-SNAPSHOT
     restart: always
     environment:
       ISA_SHOWTIME_URL: "http://showtimes:8080"
+      SPRING_DATASOURCE_USERNAME: "admin"
+      SPRING_DATASOURCE_PASSWORD: "admin"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://cinema_db:5432/cinemas"
+      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
 
   cinema-showtime-gateway:
     image: cinema-showtime-gateway:0.0.1-SNAPSHOT
