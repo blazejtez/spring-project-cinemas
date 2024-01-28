@@ -33,6 +33,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://showtime_db:5432/showtimes"
       SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
+      SPRING_JPA_GENERATE-DDL: "false"
 
   cinema_db:
     container_name: "cinemas-db"
@@ -59,6 +60,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://cinema_db:5432/cinemas"
       SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
+      SPRING_JPA_GENERATE-DDL: "false"
 
   cinema-showtime-gateway:
     image: cinema-showtime-gateway:0.0.1-SNAPSHOT
