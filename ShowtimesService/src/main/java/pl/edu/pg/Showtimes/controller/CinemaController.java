@@ -51,7 +51,7 @@ public class CinemaController {
 			this.cinemaService.deleteById(uuid);
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Responded", "CinemaController");
-			return ResponseEntity.status(HttpStatus.OK).headers(headers).body("Succesfully deleted " + uuid.toString());
+			return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
 		} catch (EntityNotFoundException e) {
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Not Found", "CinemaController");
