@@ -13,6 +13,7 @@ function main() {
     cd ./CinemasService/; sh ./build.sh; cd ..
     cd ./ShowtimesService/; sh ./build.sh; cd ..
     cd ./CinemaShowtimesGateway/; sh ./build.sh; cd ..
+    cd ./angular/; sh ./build.sh; cd ..
     docker-compose stop
     docker-compose rm -f
     docker-compose up -d
