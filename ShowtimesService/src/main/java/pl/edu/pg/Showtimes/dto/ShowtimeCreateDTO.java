@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -17,6 +18,6 @@ public class ShowtimeCreateDTO {
     private String showRoomName;
     private BigDecimal ticketPrice;
     private int numberOfTickets;
-    private LocalDateTime screeningTime;
+    private Date screeningTime;
     //private UUID cinema; pobierane z URL
 }

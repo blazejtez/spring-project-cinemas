@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -16,5 +17,5 @@ public class ShowtimeReadDTO {
     private String movieTitle;
     private String showRoomName;
     private BigDecimal ticketPrice;
-    private LocalDateTime screeningTime;
+    private Date screeningTime;
 }

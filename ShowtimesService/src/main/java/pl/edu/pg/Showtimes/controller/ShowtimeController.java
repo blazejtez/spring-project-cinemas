@@ -65,13 +65,13 @@ public class ShowtimeController {
             this.showtimeService.deleteById(uuid);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "ShowtimeController");
-            return ResponseEntity.status(HttpStatus.OK).headers(headers).body("Succesfully deleted "+ uuid.toString());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         catch (EntityNotFoundException e)
         {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "ShowtimeController");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body("No showtime with id:  "+ uuid.toString());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
     }
 
