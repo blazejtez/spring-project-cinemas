@@ -14,7 +14,7 @@ GET http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
 ### Create a new cinema
 ## should inform that it was successful 201 Created
 ## if there was already a cinema 200 OK
-PUT http://localhost:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
+PUT http://cinema-showtime-gateway:8085/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5
 Content-Type: application/json
 
 {

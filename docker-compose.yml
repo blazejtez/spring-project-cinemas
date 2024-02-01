@@ -44,7 +44,15 @@ services:
     image: cinema-showtime-gateway:0.0.1-SNAPSHOT
     restart: always
     environment:
-      ISA_CINEMA_URL: "http://cinemas:8080"
-      ISA_SHOWTIME_URL: "http://showtimes:8080"
+      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
+      ISA_CINEMA_URL: http://cinemas:8080
+      ISA_SHOWTIME_URL: http://showtimes:8080
+
+
+  angularclient:
+    image: angularclient:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      API_URL: http://cinema-showtime-gateway:8085/api
     ports:
-      - "8085:8085"
+      - "8087:80"
