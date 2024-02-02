@@ -96,13 +96,13 @@ public class CinemaShowtimeController {
             this.showtimeService.create(showtime);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaShowtimeController");
-            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body("Successfully created");
+            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
         }
         catch (EntityNotFoundException e)
         {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaShowtimeController");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body("Cinema not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
         }
 
     }
@@ -116,7 +116,7 @@ public class CinemaShowtimeController {
         {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaShowtimeController");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body("Cinema Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
         }
         try
         {
@@ -124,13 +124,13 @@ public class CinemaShowtimeController {
             this.showtimeService.deleteById(showtimeUuid);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaShowtimeController");
-            return ResponseEntity.status(HttpStatus.OK).headers(headers).body("Succesfully deleted " + showtimeUuid.toString());
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
         }
         catch (EntityNotFoundException e)
         {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaShowtimeController");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).body("Showtime with UUID " + showtimeUuid.toString() + " not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
         }
     }
 }

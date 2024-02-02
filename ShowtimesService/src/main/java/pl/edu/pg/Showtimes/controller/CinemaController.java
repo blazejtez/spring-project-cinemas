@@ -41,7 +41,7 @@ public class CinemaController {
 		String body = "Successfully created.";
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Responded", "CinemaController");
-		return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(body);
+		return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
 	}
 
 	@DeleteMapping("api/cinemas/{uuid}")
