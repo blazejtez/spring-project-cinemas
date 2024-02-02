@@ -1,6 +1,7 @@
 version: '3'
 
 services:
+
   cinema-showtime-discovery:
     image: cinema-showtime-discovery:0.0.1-SNAPSHOT
     restart: always
@@ -71,3 +72,12 @@ services:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
     ports:
       - "8085:8085"
+
+  angularclient:
+    image: angularclient:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      API_URL: http://cinema-showtime-gateway:8085/api
+    ports:
+      - "8087:80"
+
