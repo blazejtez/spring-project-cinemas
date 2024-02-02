@@ -96,20 +96,27 @@ public class CinemaController {
     }
 
     @DeleteMapping("{uuid}")
-    ResponseEntity<String> deleteCinema(@PathVariable UUID uuid) {
-        try {
+    ResponseEntity<String> deleteCinema(@PathVariable UUID uuid)
+    {
+        try
+        {
             Cinema cinema = this.cinemaService.findById(uuid);
             this.cinemaService.deleteById(uuid);
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Responded", "CinemaController");
-            return ResponseEntity.status(HttpStatus.OK).headers(headers).body("Succesfully deleted " + uuid.toString());
-        } catch (EntityNotFoundException e) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Not Found", "CinemaController");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-
-
+        catch (EntityNotFoundException e)
+        {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+    }
+    @PostMapping
+    ResponseEntity<String> postCinema(@RequestBody CinemaCreateDTO cinemaCreateDTO) {
+        UUID uuid = UUID.randomUUID();
+        this.cinemaService.create(this.cinemaCreateDTOToCinema.apply(uuid, cinemaCreateDTO));
+        String body = "Successfully created.";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "CinemaController");
+        return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
     }
 
 }
