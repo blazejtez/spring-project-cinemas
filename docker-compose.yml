@@ -1,14 +1,11 @@
 version: '3'
 
 services:
-
   cinema-showtime-discovery:
     image: cinema-showtime-discovery:0.0.1-SNAPSHOT
     restart: always
     ports:
-      - "8761:8761"
-    environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
+      - "8090:8080"
 
   showtime_db:
     container_name: "showtimes-db"
@@ -29,11 +26,15 @@ services:
       mode: replicated
       replicas: 2
     environment:
+      SPRING_APPLICATION_NAME: "showtimes-service"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka"
+      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
+      ISA_CINEMA_URL: http://cinemas:8080
+      ISA_SHOWTIME_URL: http://showtimes:8080
       SPRING_DATASOURCE_USERNAME: "admin"
       SPRING_DATASOURCE_PASSWORD: "admin"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://showtime_db:5432/showtimes"
       SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
       SPRING_JPA_GENERATE-DDL: "false"
 
   cinema_db:
@@ -55,7 +56,10 @@ services:
       mode: replicated
       replicas: 2
     environment:
-      ISA_SHOWTIME_URL: "http://showtimesservice"
+      SPRING_APPLICATION_NAME: "cinemas-service"
+      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
+      ISA_CINEMA_URL: http://cinemas:8080
+      ISA_SHOWTIME_URL: http://showtimes:8080
       SPRING_DATASOURCE_USERNAME: "admin"
       SPRING_DATASOURCE_PASSWORD: "admin"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://cinema_db:5432/cinemas"
@@ -67,11 +71,11 @@ services:
     image: cinema-showtime-gateway:0.0.1-SNAPSHOT
     restart: always
     environment:
-      ISA_CINEMA_URL: "lb://CINEMASSERVICE"
-      ISA_SHOWTIME_URL: "lb://SHOWTIMESSERVICE"
+      SPRING_APPLICATION_NAME: "cinemas-showtime-gateway"
+      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
+      ISA_CINEMA_URL: http://cinemas:8080
+      ISA_SHOWTIME_URL: http://showtimes:8080
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
-    ports:
-      - "8085:8085"
 
   angularclient:
     image: angularclient:0.0.1-SNAPSHOT
@@ -80,4 +84,3 @@ services:
       API_URL: http://cinema-showtime-gateway:8085/api
     ports:
       - "8087:80"
-
