@@ -12,6 +12,7 @@ ENV SERVER_PORT=8080
 
 
 ENV SPRING_CONFIG_IMPORT=optional:configserver:http://cinema-showtime-configuration:8080
+
 EXPOSE 8080
 
 COPY target/Cinemas-${VERSION}.jar /opt/Cinemas/Cinemas.jar

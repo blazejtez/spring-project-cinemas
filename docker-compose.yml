@@ -21,41 +21,39 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
 
+  showtime_db:
+    restart: always
+    container_name: "showtimes-db"
+    image: postgres
+    volumes:
+      - /c/postgres/showtimes:/var/lib/postgresql/data
+    ports:
+      - "5439:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_DB: showtimes
+      POSTGRES_PASSWORD: admin
 
-#
-#  showtime_db:
-#    restart: always
-#    container_name: "showtimes-db"
-#    image: postgres
-#    volumes:
-#      - /c/postgres/showtimes:/var/lib/postgresql/data
-#    ports:
-#      - "5439:5432"
-#    environment:
-#      POSTGRES_USER: admin
-#      POSTGRES_DB: showtimes
-#      POSTGRES_PASSWORD: admin
-#
-#  pgadmin:
-#    image: dpage/pgadmin4
-#    container_name: pgadmin4_container
-#    restart: always
-#    ports:
-#      - "8889:80"
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: admin@domain-name.com
-#      PGADMIN_DEFAULT_PASSWORD: password
-#    volumes:
-#      - pgadmin-data:/var/lib/pgadmin
-#
-#  showtimes:
-#    image: showtimes:0.0.1-SNAPSHOT
-#    restart: always
-#    deploy:
-#      replicas: 2
-#    environment:
-#      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
-#
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8889:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  showtimes:
+    image: showtimes:0.0.1-SNAPSHOT
+    restart: always
+    deploy:
+      replicas: 2
+    environment:
+      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
+
   cinema_db:
     container_name: "cinemas-db"
     image: postgres
@@ -74,9 +72,6 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
 
-
-
-
 #  angularclient:
 #    image: angularclient:0.0.1-SNAPSHOT
 #    restart: always
@@ -84,7 +79,7 @@ services:
 #      API_URL: http://cinema-showtime-gateway:8085/api
 #    ports:
 #      - "8087:80"
-#
-#volumes:
-#  local_pgdata:
-#  pgadmin-data:
+
+volumes:
+  local_pgdata:
+  pgadmin-data:

@@ -22,13 +22,6 @@ public class EventRepository {
     private final LoadBalancerClient loadBalancerClient;
     private final RestTemplate restTemplate;
 
-//    @Value("${isa.showtime.url}")
-//    private String baseUrl;
-    @Value("${eureka.client.serviceurl.defaultzone}")
-    private String eurekaUrl;
-    @Value("${isa.showtime.url}")
-    private String baseUrl;
-
     @Autowired
     public EventRepository(RestTemplate restTemplate, LoadBalancerClient loadBalancerClient) {
         this.restTemplate = restTemplate;
