@@ -8,7 +8,7 @@
 		<version>3.1.4</version>
 		<relativePath/>
 	</parent>
-	<groupId>pl.edu.pl</groupId>
+	<groupId>pl.edu.pg</groupId>
 	<artifactId>CinemaShowtimeGateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CinemaShowtimeGateway</name>
@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.4</spring-cloud.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -33,6 +34,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+
         <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
