@@ -37,11 +37,6 @@ public class EventRepository {
 
     public void delete(UUID uuid) {
         String uri = loadBalancerClient.choose("showtimes-service").getUri().toString();
-        log.error("NOTICE ME SENPAI");
-        log.error("NOTICE ME SENPAI");
-        log.error("NOTICE ME SENPAI");
-        log.error("NOTICE ME SENPAI");
-        log.error("NOTICE ME SENPAI");
         log.error(uri + "/api/cinemas/" + uuid);
         restTemplate.delete("lb://showtimes-service:8080" + "/api/showtimes/cinemas/" + uuid);
 
@@ -51,11 +46,6 @@ public class EventRepository {
         String uri = loadBalancerClient.choose("showtimes-service").getUri().toString();
         CinemaCreateDTO cinemaCreateDTO = new CinemaCreateDTO();
         String uuid = cinema.getId().toString();
-        log.error("NOTICE ME SENPAI");
-        log.error("NOTICE ME SENPAI");
-        log.error("NOTICE ME SENPAI");
-        log.error("NOTICE ME SENPAI");
-        log.error("NOTICE ME SENPAI");
         log.error(uri + "/api/cinemas/" + uuid);
         restTemplate.postForLocation("lb://showtimes-service:8080" + "/api/showtimes/cinemas/" + uuid, cinemaCreateDTO);
     }

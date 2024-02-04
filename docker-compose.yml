@@ -1,6 +1,13 @@
 version: '3'
 
 services:
+  cinema-showtime-configuration:
+    image: cinema-showtime-configuration:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
+
+
   cinema-showtime-discovery:
     image: cinema-showtime-discovery:0.0.1-SNAPSHOT
     restart: always
@@ -33,39 +40,13 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
-  showtimes-1:
+  showtimes:
     image: showtimes:0.0.1-SNAPSHOT
     restart: always
+    deploy:
+      replicas: 2
     environment:
-      SPRING_APPLICATION_NAME: "showtimes-service"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
-      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
-      ISA_CINEMA_URL: http://cinemas:8080
-      ISA_SHOWTIME_URL: http://showtimes:8080
-      EUREKA_INSTANCE_INSTANCE_ID: "1"
-      SPRING_DATASOURCE_USERNAME: "admin"
-      SPRING_DATASOURCE_PASSWORD: "admin"
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://showtime_db:5432/showtimes"
-      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
-      SPRING_JPA_GENERATE-DDL: "false"
-
-  showtimes-2:
-    image: showtimes:0.0.1-SNAPSHOT
-    restart: always
-    environment:
-      SPRING_APPLICATION_NAME: "showtimes-service"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
-      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
-      ISA_CINEMA_URL: http://cinemas:8080
-      ISA_SHOWTIME_URL: http://showtimes:8080
-      EUREKA_INSTANCE_INSTANCE_ID: "2"
-      SPRING_DATASOURCE_USERNAME: "admin"
-      SPRING_DATASOURCE_PASSWORD: "admin"
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://showtime_db:5432/showtimes"
-      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
-      SPRING_JPA_GENERATE-DDL: "false"
-
-
+      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
 
   cinema_db:
     container_name: "cinemas-db"
@@ -83,26 +64,15 @@ services:
     image: cinemas:0.0.1-SNAPSHOT
     restart: always
     environment:
-      SPRING_APPLICATION_NAME: "cinemas-service"
-      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
-      ISA_CINEMA_URL: http://cinemas:8080
-      ISA_SHOWTIME_URL: http://showtimes:8080
-      SPRING_DATASOURCE_USERNAME: "admin"
-      SPRING_DATASOURCE_PASSWORD: "admin"
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://cinema_db:5432/cinemas"
-      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
-      SPRING_JPA_GENERATE-DDL: "false"
+      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
+
 
   cinema-showtime-gateway:
     image: cinema-showtime-gateway:0.0.1-SNAPSHOT
     restart: always
     environment:
-      SPRING_APPLICATION_NAME: "cinemas-showtime-gateway"
-      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
-      ISA_CINEMA_URL: http://cinemas:8080
-      ISA_SHOWTIME_URL: http://showtimes:8080
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
+      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
+
 
   angularclient:
     image: angularclient:0.0.1-SNAPSHOT

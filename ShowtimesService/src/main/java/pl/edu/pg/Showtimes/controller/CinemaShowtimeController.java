@@ -43,6 +43,7 @@ public class CinemaShowtimeController {
     @GetMapping
     ResponseEntity<ShowtimesReadDTO> getCinemaShowtimes(@PathVariable UUID cinemaUuid)
     {
+        log.error("GETTING SHOWTIMES");
         try {
             this.cinemaService.findById(cinemaUuid);
         }
@@ -62,6 +63,7 @@ public class CinemaShowtimeController {
     @GetMapping("{showtimeUuid}")
     ResponseEntity<ShowtimeReadDTO> getShowtime(@PathVariable UUID cinemaUuid, @PathVariable UUID showtimeUuid)
     {
+        log.error("GETTING SHOWTIME");
         try {
             this.cinemaService.findById(cinemaUuid);
         }
@@ -92,6 +94,7 @@ public class CinemaShowtimeController {
     ResponseEntity<String> postShowtime(@RequestBody ShowtimeCreateDTO showtimeCreateDTO, @PathVariable UUID cinemaUuid,
                                         @PathVariable UUID showtimeUuid)
     {
+        log.error("PUTTING SHOWTIME");
         try
         {
             Showtime showtime = showtimeCreateDTOToShowtime.apply(cinemaUuid, showtimeUuid, showtimeCreateDTO);
@@ -111,6 +114,7 @@ public class CinemaShowtimeController {
     @DeleteMapping("{showtimeUuid}")
     ResponseEntity<String> deleteShowtime(@PathVariable UUID showtimeUuid, @PathVariable UUID cinemaUuid)
     {
+        log.error("DELETING SHOWTIME");
         try {
             this.cinemaService.findById(cinemaUuid);
         }

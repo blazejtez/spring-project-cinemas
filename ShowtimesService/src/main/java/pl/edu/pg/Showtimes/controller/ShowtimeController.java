@@ -36,7 +36,7 @@ public class ShowtimeController {
     @GetMapping("api/showtimes")
     ResponseEntity<ShowtimesReadDTO> getShowtimes()
     {
-        log.info("Get all showtimes");
+        log.error("Get all showtimes");
         List<Showtime> showtimes = this.showtimeService.findAll();
         ShowtimesReadDTO showtimesReadDTO = this.showtimesToShowtimesReadDTO.apply(showtimes);
         HttpHeaders headers = new HttpHeaders();
@@ -46,6 +46,8 @@ public class ShowtimeController {
     @GetMapping("api/showtimes/{uuid}")
     ResponseEntity<ShowtimeReadDTO> getShowtime(@PathVariable UUID uuid)
     {
+        log.error("Get showtime");
+
         try
         {
             Showtime showtime = this.showtimeService.findById(uuid);
@@ -63,6 +65,8 @@ public class ShowtimeController {
     @DeleteMapping("api/showtimes/{uuid}")
     ResponseEntity<String> deleteShowtime(@PathVariable UUID uuid)
     {
+        log.error("Delete showtime");
+
         try
         {
             Showtime showtime = this.showtimeService.findById(uuid);
