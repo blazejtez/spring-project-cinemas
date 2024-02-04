@@ -6,8 +6,10 @@ services:
     restart: always
     ports:
       - "8090:8080"
+      - "8761:8761"
 
   showtime_db:
+    restart: always
     container_name: "showtimes-db"
     image: postgres
     volumes:
@@ -15,27 +17,55 @@ services:
     ports:
       - "5439:5432"
     environment:
-      POSTGRES_USER: "admin"
-      POSTGRES_DB: "showtimes"
-      POSTGRES_PASSWORD: "admin"
+      POSTGRES_USER: admin
+      POSTGRES_DB: showtimes
+      POSTGRES_PASSWORD: admin
 
-  showtimes:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8889:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  showtimes-1:
     image: showtimes:0.0.1-SNAPSHOT
     restart: always
-    deploy:
-      mode: replicated
-      replicas: 2
     environment:
       SPRING_APPLICATION_NAME: "showtimes-service"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
       ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
       ISA_CINEMA_URL: http://cinemas:8080
       ISA_SHOWTIME_URL: http://showtimes:8080
+      EUREKA_INSTANCE_INSTANCE_ID: "1"
       SPRING_DATASOURCE_USERNAME: "admin"
       SPRING_DATASOURCE_PASSWORD: "admin"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://showtime_db:5432/showtimes"
       SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
       SPRING_JPA_GENERATE-DDL: "false"
+
+  showtimes-2:
+    image: showtimes:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      SPRING_APPLICATION_NAME: "showtimes-service"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
+      ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
+      ISA_CINEMA_URL: http://cinemas:8080
+      ISA_SHOWTIME_URL: http://showtimes:8080
+      EUREKA_INSTANCE_INSTANCE_ID: "2"
+      SPRING_DATASOURCE_USERNAME: "admin"
+      SPRING_DATASOURCE_PASSWORD: "admin"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://showtime_db:5432/showtimes"
+      SPRING_DATASOURCE_DRIVERCLASSNAME: "org.postgresql.Driver"
+      SPRING_JPA_GENERATE-DDL: "false"
+
+
 
   cinema_db:
     container_name: "cinemas-db"
@@ -52,9 +82,6 @@ services:
   cinemas:
     image: cinemas:0.0.1-SNAPSHOT
     restart: always
-    deploy:
-      mode: replicated
-      replicas: 2
     environment:
       SPRING_APPLICATION_NAME: "cinemas-service"
       ISA_GATEWAY_HOST: cinema-showtime-gateway:8085
@@ -84,3 +111,7 @@ services:
       API_URL: http://cinema-showtime-gateway:8085/api
     ports:
       - "8087:80"
+
+volumes:
+  local_pgdata:
+  pgadmin-data:

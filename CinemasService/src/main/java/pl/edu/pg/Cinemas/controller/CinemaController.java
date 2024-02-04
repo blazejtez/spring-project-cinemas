@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,8 @@ import pl.edu.pg.Cinemas.function.CinemaToCinemaReadDTO;
 import pl.edu.pg.Cinemas.function.CinemasToCinemasReadDTO;
 import pl.edu.pg.Cinemas.service.CinemaService;
 
+import java.net.URI;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,19 +31,16 @@ public class CinemaController {
     private final CinemasToCinemasReadDTO cinemasToCinemasReadDTO;
     private final CinemaToCinemaReadDTO cinemaToCinemaReadDTO;
     private final CinemaCreateDTOToCinema cinemaCreateDTOToCinema;
-    private final DiscoveryClient discoveryClient;
 
+    private final LoadBalancerClient loadBalancerClient;
 
     @Autowired
-    public CinemaController(CinemaService cinemaService,
-                            CinemasToCinemasReadDTO cinemasToCinemasReadDTO,
-                            CinemaToCinemaReadDTO cinemaToCinemaReadDTO,
-                            CinemaCreateDTOToCinema cinemaCreateDTOToCinema, DiscoveryClient discoveryClient) {
+    public CinemaController(CinemaService cinemaService, CinemasToCinemasReadDTO cinemasToCinemasReadDTO, CinemaToCinemaReadDTO cinemaToCinemaReadDTO, CinemaCreateDTOToCinema cinemaCreateDTOToCinema, LoadBalancerClient loadBalancerClient) {
         this.cinemaService = cinemaService;
         this.cinemasToCinemasReadDTO = cinemasToCinemasReadDTO;
         this.cinemaToCinemaReadDTO = cinemaToCinemaReadDTO;
         this.cinemaCreateDTOToCinema = cinemaCreateDTOToCinema;
-        this.discoveryClient = discoveryClient;
+        this.loadBalancerClient = loadBalancerClient;
     }
 
     // logic: the requests is always correct, no reason to throw Exceptions.
@@ -53,11 +53,25 @@ public class CinemaController {
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(cinemasReadDTO);
     }
 
-    @GetMapping("/eureka")
-    List<String> printAll() {
-        List<String> services = discoveryClient.getServices();
-        services.forEach(System.out::println);
-        return services;
+    @GetMapping("/ups")
+    String printAll() {
+        String answers = new String();
+        try
+        {
+            for(int i=0; i<10; i++)
+            {
+                log.error(loadBalancerClient.choose("showtimes-service").getUri().toString());
+                answers = answers + " " + loadBalancerClient.choose("showtimes-service").toString();
+            }
+            log.error("EUREKA CONTROLLER TRY SUCCESFUL");
+            return answers;
+        }
+        catch (Exception e)
+        {
+            log.error("EUREKA CONTROLLER TRY FAILED");
+            answers = answers + e.getMessage();
+            return answers;
+        }
     }
 
     @GetMapping("{uuid}")
@@ -81,17 +95,15 @@ public class CinemaController {
         try {
             Cinema cinema = this.cinemaService.findById(uuid);
             this.cinemaService.create(this.cinemaCreateDTOToCinema.apply(uuid, cinemaCreateDTO));
-            String body = "Successfully updated.";
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
-            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(body);
+            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
         } catch (EntityNotFoundException e) {
             Cinema cinema = this.cinemaCreateDTOToCinema.apply(uuid, cinemaCreateDTO);
             this.cinemaService.create(cinema);
-            String body = "Successfully created.";
             HttpHeaders headers = new HttpHeaders();
             headers.add("Responded", "CinemaController");
-            return ResponseEntity.status(HttpStatus.OK).headers(headers).body(body);
+            return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
         }
     }
 
@@ -113,7 +125,6 @@ public class CinemaController {
     ResponseEntity<String> postCinema(@RequestBody CinemaCreateDTO cinemaCreateDTO) {
         UUID uuid = UUID.randomUUID();
         this.cinemaService.create(this.cinemaCreateDTOToCinema.apply(uuid, cinemaCreateDTO));
-        String body = "Successfully created.";
         HttpHeaders headers = new HttpHeaders();
         headers.add("Responded", "CinemaController");
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();

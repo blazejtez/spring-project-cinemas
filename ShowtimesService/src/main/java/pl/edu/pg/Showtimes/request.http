@@ -1,9 +1,3 @@
-# Cinemas Endpoints
-### Create a new cinema
-## should inform that it was successful 201 Created
-## if there was already a cinema 200 OK
-POST http://localhost:8082/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
-
 ### Delete a cinema existing
 ## 200 if exists
 ## 404 if there is none
@@ -60,4 +54,6 @@ Content-Type: application/json
   "numberOfTickets":  10,
   "screeningTime": null
 }
-### ^^^^^^^^^^^^^^^^^ napraw nulla mordo
+
+
+#{"movieTitle": "Cinema Name","showRoomName": "Cinema Street","ticketPrice": "10.99","numberOfTickets": 10,"screeningTime": "2019-01-03T22:08:28.097832"}

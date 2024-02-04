@@ -19,8 +19,6 @@ public class CinemaShowtimesGatewayApplication {
     @Bean
     public RouteLocator routeLocator(
             RouteLocatorBuilder builder,
-            @Value("${isa.cinema.url}") String cinemaUrl,
-            @Value("${isa.showtime.url}") String showtimeUrl,
             @Value("${isa.gateway.host}") String host
     ) {
         return builder
@@ -32,7 +30,7 @@ public class CinemaShowtimesGatewayApplication {
                                 "/api/cinemas/{uuid}",
                                 "/api/cinemas"
                         )
-                        .uri(cinemaUrl)
+                        .uri("lb://cinemas-service")
                 )
                 .route("showtimes", route -> route
                         .host(host)
@@ -43,23 +41,8 @@ public class CinemaShowtimesGatewayApplication {
                                 "/api/cinemas/{uuid}/showtimes",
                                 "/api/cinemas/{uuid}/showtimes/**"
                         )
-                        .uri(showtimeUrl)
+                        .uri("lb://showtimes-service")
                 )
                 .build();
     }
-//	@Component
-//	public class Debugger {
-//		private final RouteLocator routeLocator;
-//
-//		@Autowired
-//		public Debugger(RouteLocator routeLocator) {
-//			this.routeLocator = routeLocator;
-//		}
-//
-//		@PostConstruct
-//		public void debug() {
-//			this.routeLocator.getRoutes();
-//		}
-//
-//	}
 }

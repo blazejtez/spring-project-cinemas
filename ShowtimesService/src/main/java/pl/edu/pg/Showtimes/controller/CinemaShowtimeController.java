@@ -1,6 +1,7 @@
 package pl.edu.pg.Showtimes.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import pl.edu.pg.Showtimes.service.ShowtimeService;
 
 import java.util.List;
 import java.util.UUID;
+@Slf4j
 @RestController
 @RequestMapping("api/cinemas/{cinemaUuid}/showtimes")
 public class CinemaShowtimeController {
@@ -133,4 +135,18 @@ public class CinemaShowtimeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(headers).build();
         }
     }
+    @PostMapping
+    ResponseEntity<String> postShowtime(@RequestBody ShowtimeCreateDTO showtimeCreateDTO, @PathVariable UUID cinemaUuid)
+    {
+        log.error("CREATING SHOWTIME");
+        UUID showtimeUuid = UUID.randomUUID();
+        Showtime showtime = showtimeCreateDTOToShowtime.apply(cinemaUuid, showtimeUuid, showtimeCreateDTO);
+        this.showtimeService.create(showtime);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Responded", "CinemaShowtimeController");
+        return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
+
+    }
+
+
 }
