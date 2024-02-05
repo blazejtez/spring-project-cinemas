@@ -10,8 +10,8 @@ ENV VERSION="0.0.1-SNAPSHOT"
 
 ENV SERVER_PORT=8085
 
-
 ENV SPRING_CONFIG_IMPORT=optional:configserver:http://cinema-showtime-configuration:8080
+
 EXPOSE 8085
 
 COPY target/CinemaShowtimeGateway-${VERSION}.jar /opt/CinemaShowtimeGateway/CinemaShowtimeGateway.jar

@@ -3,7 +3,6 @@ package pl.edu.pg.Cinemas.controller;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,8 +17,6 @@ import pl.edu.pg.Cinemas.function.CinemaToCinemaReadDTO;
 import pl.edu.pg.Cinemas.function.CinemasToCinemasReadDTO;
 import pl.edu.pg.Cinemas.service.CinemaService;
 
-import java.net.URI;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +60,7 @@ public class CinemaController {
                 log.error(loadBalancerClient.choose("showtimes-service").getUri().toString());
                 answers = answers + " " + loadBalancerClient.choose("showtimes-service").toString();
             }
-            log.error("EUREKA CONTROLLER TRY SUCCESFUL");
+
             return answers;
         }
         catch (Exception e)

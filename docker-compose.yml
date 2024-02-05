@@ -15,11 +15,6 @@ services:
       - "8090:8080"
       - "8761:8761"
 
-  cinema-showtimes-gateway:
-    image: cinema-showtime-gateway:0.0.1-SNAPSHOT
-    restart: always
-    environment:
-      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
 
   showtime_db:
     restart: always
@@ -72,13 +67,19 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
 
-#  angularclient:
-#    image: angularclient:0.0.1-SNAPSHOT
-#    restart: always
-#    environment:
-#      API_URL: http://cinema-showtime-gateway:8085/api
-#    ports:
-#      - "8087:80"
+  angularclient:
+    image: angularclient:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      API_URL: http://cinema-showtimes-gateway:8085/api
+    ports:
+      - "8087:80"
+
+  cinema-showtimes-gateway:
+    image: cinema-showtime-gateway:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
 
 volumes:
   local_pgdata:
