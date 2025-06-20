@@ -1,0 +1,36 @@
+<article *ngIf="cinema">
+  <header><h2>Edit cinema</h2></header>
+  <form class="container" #form="ngForm" (ngSubmit)="onSubmit()">
+    <table>
+      <tr>
+        <td><label for="cinema_name">Name:</label></td>
+        <td><input id="cinema_name" name="name" [(ngModel)]="cinema.name" /></td>
+      </tr>
+      <tr>
+        <td><label for="street">Street:</label></td>
+        <td><input id="street" name="street" [(ngModel)]="cinema.street" /></td>
+      </tr>
+      <tr>
+        <td><label for="city">City:</label></td>
+        <td><input id="city" name="city" [(ngModel)]="cinema.city" /></td>
+      </tr>
+      <tr>
+        <td><label for="zipCode">Zip Code:</label></td>
+        <td><input id="zipCode" name="zipCode" [(ngModel)]="cinema.zipCode" /></td>
+      </tr>
+      <tr>
+        <td><label for="employeesNumber">Number of employees:</label></td>
+        <td><input id="employeesNumber" name="employeesNumber" [(ngModel)]="cinema.employeesNumber" /></td>
+      </tr>
+      <tr>
+        <td><label for="phoneNumber">Phone Number:</label></td>
+        <td><input id="phoneNumber" name="phoneNumber" [(ngModel)]="cinema.phoneNumber" /></td>
+      </tr>
+      <tr>
+        <td><label for="openingDate">Opening date:</label></td>
+        <td><input id="openingDate" name="openingDate" [(ngModel)]="cinema.openingDate" /></td>
+      </tr>
+    </table>
+    <button type="submit">Update</button>
+  </form>
+</article>

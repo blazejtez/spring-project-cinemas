@@ -1,0 +1,53 @@
+<article *ngIf="cinema">
+  <header><h2>Inspecting {{cinema.name}}</h2></header>
+  <table>
+    <tr>
+      <td>Cinema name:</td>
+      <td>{{ cinema.name }}</td>
+    </tr>
+    <tr>
+      <td>Cinema street:</td>
+      <td>{{ cinema.street }}</td>
+    </tr>
+    <tr>
+      <td>Cinema city:</td>
+      <td>{{ cinema.city }}</td>
+    </tr>
+    <tr>
+      <td>Cinema zip code:</td>
+      <td>{{ cinema.zipCode }}</td>
+    </tr>
+    <tr>
+      <td>Cinema employees number:</td>
+      <td>{{ cinema.employeesNumber }}</td>
+    </tr>
+    <tr>
+      <td>Cinema phone number:</td>
+      <td>{{ cinema.phoneNumber }}</td>
+    </tr>
+    <tr>
+      <td>Cinema opening date:</td>
+      <td>{{ cinema.openingDate }}</td>
+    </tr>
+  </table>
+
+  <div *ngIf="showtimes; else noShowtimes">
+    <header><h2>Inspecting {{cinema.name}}'s showtimes:</h2></header>
+      <table *ngIf="showtimes.showtimes.length > 0; else noShowtimes">
+        <tr>
+          <th>ID</th>
+          <th>Description</th>
+        </tr>
+        <tr *ngFor="let showtime of showtimes.showtimes">
+          <td>{{showtime.id}}</td>
+          <td>{{showtime.description}}</td>
+          <td><a [routerLink]="['showtimes', showtime.id]">Inspect</a></td>
+          <td><a [routerLink]="['showtimes', showtime.id, 'edit']">Edit</a></td>
+          <td><button (click)="onDelete(showtime.id)">Delete</button></td>
+        </tr>
+
+      </table>
+  </div>
+  <ng-template #noShowtimes>No showtimes in this cinema yet!</ng-template>
+  <button (click)="newShowtime()">New showtime</button>
+</article>

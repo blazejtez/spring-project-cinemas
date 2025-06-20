@@ -1,0 +1,25 @@
+<article *ngIf="showtime">
+  <header><h2>Edit Showtime</h2></header>
+  <form class="container" #form="ngForm" (ngSubmit)="onSubmit()">
+    <table>
+      <tr>
+        <td><label for="movieTitle">Movie title:</label></td>
+        <td><input id="movieTitle" name="movieTitle" [(ngModel)]="showtime.movieTitle" /></td>
+      </tr>
+      <tr>
+        <td><label for="showRoomName">Showroom name:</label></td>
+        <td><input id="showRoomName" name="showRoomName" [(ngModel)]="showtime.showRoomName" /></td>
+      </tr>
+      <tr>
+        <td><label for="ticketPrice">Ticket price:</label></td>
+        <td><input id="ticketPrice" name="ticketPrice" [(ngModel)]="showtime.ticketPrice" /></td>
+      </tr>
+      <tr>
+        <td><label for="screeningTime">Screening time:</label></td>
+        <td><input id="screeningTime" name="screeningTime" [(ngModel)]="showtime.screeningTime" /></td>
+      </tr>
+    </table>
+    <button type="submit">Update</button>
+  </form>
+  <a [routerLink]="[backUrl]">Back</a>
+</article>

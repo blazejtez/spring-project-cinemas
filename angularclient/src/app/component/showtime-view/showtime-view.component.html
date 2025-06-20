@@ -1,0 +1,22 @@
+<article *ngIf="showtime">
+  <table>
+    <tr>
+      <td>Movie title:</td>
+      <td>{{ showtime.movieTitle }}</td>
+    </tr>
+    <tr>
+      <td>Showroom name:</td>
+      <td>{{ showtime.showRoomName }}</td>
+    </tr>
+    <tr>
+      <td>Ticket price:</td>
+      <td>{{ showtime.ticketPrice }}</td>
+    </tr>
+    <tr>
+      <td>Screening time:</td>
+      <td>{{ showtime.screeningTime }}</td>
+    </tr>
+  </table>
+  <a [routerLink]="[backUrl]">Back</a>
+</article>
+

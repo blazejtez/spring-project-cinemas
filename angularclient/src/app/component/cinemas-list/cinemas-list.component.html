@@ -1,0 +1,19 @@
+<header><h2>Cinemas</h2></header>
+
+<table *ngIf="cinemas">
+  <tr>
+    <th>ID</th>
+    <th>Description</th>
+  </tr>
+  <tr *ngFor="let cinema of cinemas.cinemas">
+    <td>{{cinema.id}}</td>
+    <td>{{cinema.description}}</td>
+    <td><a [routerLink]="['/cinemas', cinema.id]">Inspect</a></td>
+    <td><a [routerLink]="['/cinemas', cinema.id, 'edit']">Edit</a></td>
+    <td><button (click)="onDelete(cinema)">Delete</button></td>
+  </tr>
+  <button (click)="newCinema()">New cinema</button>
+
+
+
+</table>

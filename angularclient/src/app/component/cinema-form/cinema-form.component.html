@@ -1,0 +1,36 @@
+<article *ngIf="cinema">
+  <header><h2>Create new cinema</h2></header>
+  <form class="container" #form="ngForm" (ngSubmit)="onSubmit()">
+    <table>
+      <tr>
+        <td><label for="name">Name:</label></td>
+        <td><input id="name" name="name" value="Nazwa" [(ngModel)]="cinema.name" /></td>
+      </tr>
+      <tr>
+        <td><label for="street">Street:</label></td>
+        <td><input id="street" name="street" value="Sezamkowa" [(ngModel)]="cinema.street" /></td>
+      </tr>
+      <tr>
+        <td><label for="city">City:</label></td>
+        <td><input id="city" name="city" value="Miasto" [(ngModel)]="cinema.city"></td>
+      </tr>
+      <tr>
+        <td><label for="zipCode">Zip Code:</label></td>
+        <td><input id="zipCode" name="zipCode" value="82-200" [(ngModel)]="cinema.zipCode" /></td>
+      </tr>
+      <tr>
+        <td><label for="employeesNumber">Number of employees:</label></td>
+        <td><input id="employeesNumber" name="employeesNumber" value="100" [(ngModel)]="cinema.employeesNumber" /></td>
+      </tr>
+      <tr>
+        <td><label for="phoneNumber">Phone Number:</label></td>
+        <td><input id="phoneNumber" name="phoneNumber" value="123-456" [(ngModel)]="cinema.phoneNumber" /></td>
+      </tr>
+      <tr>
+        <td><label for="openingDate">Opening date:</label></td>
+        <td><input id="openingDate" name="openingDate" value="2023-01-02T00:00:00.000+00:00" [(ngModel)]="cinema.openingDate" /></td>
+      </tr>
+    </table>
+    <button type="submit">Create</button>
+  </form>
+</article>

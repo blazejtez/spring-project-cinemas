@@ -1,0 +1,34 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Blazej (generated)" id="1706464727184-1">
+        <createTable tableName="cinemas">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="cinemas_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Blazej (generated)" id="1706464727184-2">
+        <createTable tableName="showtimes">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="showtimes_pkey"/>
+            </column>
+            <column name="movie_title" type="VARCHAR(255)"/>
+            <column name="number_of_tickets" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="screening_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="show_room_name" type="VARCHAR(255)"/>
+            <column name="ticket_price" type="numeric(38, 2)"/>
+            <column name="cinema" type="UUID"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Blazej (generated)" id="1706464727184-3">
+        <addForeignKeyConstraint baseColumnNames="cinema" baseTableName="showtimes"
+                                 constraintName="fk1tu67ufo2hgrmxokqo07jij0b" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="id" referencedTableName="cinemas" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

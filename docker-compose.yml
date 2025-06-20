@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+  cinema-showtime-configuration:
+    image: cinema-showtime-configuration:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://cinema-showtime-discovery:8080/eureka/"
+
+
+  cinema-showtime-discovery:
+    image: cinema-showtime-discovery:0.0.1-SNAPSHOT
+    restart: always
+    ports:
+      - "8090:8080"
+      - "8761:8761"
+
+
+  showtime_db:
+    restart: always
+    container_name: "showtimes-db"
+    image: postgres
+    volumes:
+      - /c/postgres/showtimes:/var/lib/postgresql/data
+    ports:
+      - "5439:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_DB: showtimes
+      POSTGRES_PASSWORD: admin
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8889:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  showtimes:
+    image: showtimes:0.0.1-SNAPSHOT
+    restart: always
+    deploy:
+      replicas: 2
+    environment:
+      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
+
+  cinema_db:
+    container_name: "cinemas-db"
+    image: postgres
+    volumes:
+      - /c/postgres/cinemas:/var/lib/postgresql/data
+    ports:
+      - "5438:5432"
+    environment:
+      POSTGRES_USER: "admin"
+      POSTGRES_DB: "cinemas"
+      POSTGRES_PASSWORD: "admin"
+
+  cinemas:
+    image: cinemas:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
+
+  angularclient:
+    image: angularclient:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      API_URL: http://cinema-showtimes-gateway:8085/api
+    ports:
+      - "8087:80"
+
+  cinema-showtimes-gateway:
+    image: cinema-showtime-gateway:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      SPRING_CONFIG_IMPORT: "configserver:http://cinema-showtime-configuration:8080/"
+
+volumes:
+  local_pgdata:
+  pgadmin-data:

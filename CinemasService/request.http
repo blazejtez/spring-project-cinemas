@@ -1,0 +1,40 @@
+# Cinemas Endpoints
+
+#### Get all cinemas
+## always works - returns empty list of no cinemas present
+GET http://localhost:8085/api/cinemas
+
+#### Get single existing cinema
+## should return an existing cinema
+GET http://localhost:8081/api/cinemas/fe1ad570-dfeb-4c3f-be69-b594c0dd4fff
+
+#### Get single non existing cinema
+## should return error 404 and information that cinema does not exist
+GET http://localhost:8081/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc7
+
+### Create a new cinema
+## should inform that it was successful 201 Created
+## if there was already a cinema 200 OK
+PUT http://localhost:8081/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
+Content-Type: application/json
+
+{
+  "name": "Cinema Name",
+  "street": "Cinema Street",
+  "city": "Cinema City",
+  "zipCode": "12345",
+  "employeesNumber": 10,
+  "phoneNumber": "123-456-7890",
+  "openingDate": "2023-01-01"
+}
+
+
+### Delete a cinema existing
+## 200 if exists
+## 404 if there is none
+DELETE http://localhost:8081/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc6
+
+### Delete a cinema non existing
+## 200 if exists
+## 404 if there is none
+DELETE http://localhost:8080/api/cinemas/1318ad0e-d021-4662-b962-6d419459cfc5
